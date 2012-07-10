@@ -63,10 +63,10 @@ public class BaseCommands extends JavaPlugin implements Listener{
         	if(new File("BC-Banned-Players.txt").exists()) {
             	this.bannedPlayers = new ListStore(new File("BC-banned-players.txt"));
                 this.bannedPlayers.load(); 
-                logger.info(PREFIX + " Loaded the banned-players file");
+                logger.info(PREFIX + " Loaded the BC-banned-players file");
         	}else{
 			new File("BC-banned-players.txt").createNewFile();
-        	logger.info(PREFIX + " Created the BC-banned-players file");
+        	logger.info(PREFIX + " Loaded BC-banned-players file");
         	this.bannedPlayers = new ListStore(new File("BC-banned-players.txt"));
             this.bannedPlayers.load(); 
         	}

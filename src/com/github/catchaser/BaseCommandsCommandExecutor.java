@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import couk.Adamki11s.Extras.Colour.ExtrasColour;
 import couk.Adamki11s.Extras.Events.*;
 
 @SuppressWarnings("unused")
@@ -32,6 +33,7 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
+		ExtrasColour eC = new ExtrasColour();
 		if(commandLabel.equalsIgnoreCase("heal")) {
 				if(args.length == 0) {
 					if(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*")) {
@@ -59,18 +61,21 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 		}
 		if(commandLabel.equalsIgnoreCase("tp")) {
 			if(player.hasPermission("BC.tp.*") == true || player.hasPermission("BC.tp.p2p") == true) {
-				if((args.length < 0)) {
-					player.sendMessage(ChatColor.GREEN + "You must select a player to TP to!");
-				}else if(args.length == 0) {
-					Player TargetP = getServer().getPlayer(args [1]);
-					Location location = TargetP.getLocation();
-					player.teleport(location);
-				}else if(args.length >= 1) {
-					Player TargetP1 = getServer().getPlayer(args[0]);
-					Player TargetP2 = getServer().getPlayer(args[1]);
-					player.sendMessage(ChatColor.WHITE + "Under Development (Teleport player to Player)");
-					
-				}  
+				if(args.length == 0) {
+					eC.sendMultiColouredMessage(player, "You must select a player");
+					eC.sendColouredMessage(player, "Usage: /tp <player>");
+				}else if(args.length == 1) {
+					Player targetPlayer = player.getServer().getPlayer(args[0]);
+					if(targetPlayer.isOnline() == true) {
+					Location loc = targetPlayer.getLocation();
+					player.teleport(loc);
+					player.sendMessage(ChatColor.GOLD + "You teleported to: " + args[0]);
+					}else if(targetPlayer.isOnline() == false){
+						eC.sendColouredMessage(player, "Player is not online!");
+					}
+				}else if(args.length >= 2) {
+					player.sendMessage(ChatColor.WHITE + PREFIX + ChatColor.BLUE + " Not yet supported!");
+				}
 			}else if(player.hasPermission("BC.tp.*") == false || player.hasPermission("BC.tp.p2p") == true) {
 				player.sendMessage(PERM);
 			}
