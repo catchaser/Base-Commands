@@ -60,23 +60,25 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 				}
 		}
 		if(commandLabel.equalsIgnoreCase("tp")) {
-			if(player.hasPermission("BC.tp.*") == true || player.hasPermission("BC.tp.p2p") == true) {
+			if(player.hasPermission("BC.tp.*")|| player.hasPermission("BC.tp.p2p")) {
 				if(args.length == 0) {
 					eC.sendMultiColouredMessage(player, "You must select a player");
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
 				}else if(args.length == 1) {
 					Player targetPlayer = player.getServer().getPlayer(args[0]);
-					if(targetPlayer.isOnline() == true) {
-					Location loc = targetPlayer.getLocation();
-					player.teleport(loc);
-					player.sendMessage(ChatColor.GOLD + "You teleported to: " + args[0]);
-					}else if(targetPlayer.isOnline() == false){
-						eC.sendColouredMessage(player, "Player is not online!");
-					}
+					  if(targetPlayer == null){
+	                        eC.sendMultiColouredMessage(player, "Player is not online!");
+	                    return true;
+	                    }else if(targetPlayer != null){
+                    Location loc = targetPlayer.getLocation();
+                    player.teleport(loc);
+                    player.sendMessage(ChatColor.GOLD + "You teleported to: " + "" + targetPlayer.getName());
+                    return true;
+	                    }
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.WHITE + PREFIX + ChatColor.BLUE + " Not yet supported!");
 				}
-			}else if(player.hasPermission("BC.tp.*") == false || player.hasPermission("BC.tp.p2p") == true) {
+			}else if(!(player.hasPermission("BC.tp.*") || player.hasPermission("BC.tp.p2p"))) {
 				player.sendMessage(PERM);
 			}
 		}
