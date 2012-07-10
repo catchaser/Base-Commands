@@ -45,11 +45,11 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 				}else if(args.length == 1) {
 					if(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*")) {
 						Player TargetP = getServer().getPlayer(args [1]);
-						if(TargetP.isOnline() == true) {
+						if(TargetP != null) {
 						TargetP.setHealth(20);
 						TargetP.sendMessage(ChatColor.GOLD + "You were healed by: " + player.getDisplayName());
 						player.sendMessage(ChatColor.GOLD + "You healed: " + TargetP.getDisplayName());
-						}else if(TargetP.isOnline() == false) {
+						}else if(TargetP == null) {
 							player.sendMessage(ChatColor.GREEN + "Player is not online");
 						}
 					}else if(player.hasPermission("BC.heal.other") == false || player.hasPermission("BC.heal.*")) {

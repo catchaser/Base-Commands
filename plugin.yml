@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 1.01
+version: 1.2
 description:  >
              Basic Commands for a bukkit server (for now permissions sre if the player is OP)
 Author: catchaser9620
@@ -47,6 +47,12 @@ commands:
      description: Bans a player from the server
     unban:
      description: Unbans a player
+    nickname:
+     description: gives the player a nickname
+    bcversion:
+     description: Checks the version of both BaseCommands and Bukkit
+    feed:
+     description: Feeds the/a player
 permissions:
   BC.warp.*:
     description: Allows a player to use all the BC warp commands
@@ -91,6 +97,7 @@ permissions:
                 BC.heal.self: true
                 BC.heal.other: true
                 BC.heal.kill: true
+                BC.heal.feed: true
   BC.heal.self:
         description: Allows a plyaer to heal them self
         default: op
@@ -99,6 +106,9 @@ permissions:
         default: op
   BC.heal.kill:
          description: Allows a player to kill another player or them self
+         default: op
+  BC.heal.feed:
+         description: Allows a player to feed him/her self or another player
          default: op
   BC.tp.*:
     description: Allows a player to use all tp commands
@@ -143,4 +153,7 @@ permissions:
          default: op
   BC.admin.unban:
          description: Allows the unban command
+         default: op
+  BC.name.nick:
+         description: Allows the nickname command
          default: op
