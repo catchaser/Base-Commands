@@ -33,6 +33,7 @@ public class BanExecutor implements CommandExecutor{
 					ban.kickPlayer("You have been banned by: " + sender.getName());
 				}
 				plugin.bannedPlayers.save();
+				logger.info(ChatColor.RED + p.getName() + "Has banned: " + ban);
 				p.sendMessage(ChatColor.RED + args[0] + " was banned");
 				return true;
 				}
@@ -46,10 +47,10 @@ public class BanExecutor implements CommandExecutor{
 					sender.sendMessage(ChatColor.RED + "Usage: /unban <player>");
 					return true;
 				}else{
-				@SuppressWarnings("unused")
 				Player ban = p.getServer().getPlayer(args[0]);
 				plugin.bannedPlayers.remove(args [0]);
 				plugin.bannedPlayers.save();
+				logger.info(ChatColor.GOLD +p.getName() + "Has unbanned: " + ban);
 				p.sendMessage(ChatColor.RED + args[0] + " was unbanned");
 				return true;
 			    }

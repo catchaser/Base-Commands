@@ -135,51 +135,15 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		MyExecutorb = new BanExecutor(this);
 		getCommand("unban").setExecutor(MyExecutorb);
 		
+		
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this);
 		
-    	boolean success = (new File("plugins/BaseCommands/homes/")).mkdir();
-		if(success){
-			logger.info("[BaseCommands] Successfully created homes directory!");
-		}else{
-			logger.info("[BaseCommands] Successfully loaded homes directory!");
-		}
+    	HDIR();
 		
-		boolean success2 = (new File("plugins/BaseCommands/warps/")).mkdir();
-		if(success2) {
-		logger.info("[BaseCommands] Successfully created warps directory!");	
-		}else{
-			logger.info("[BaseCommands] Successfully loaded warps directory!");
-		}
-		
-		boolean success1 = (new File("plugins/BaseCommands/")).mkdir();
-		if(success1){
-			logger.info("[BaseCommands] Successfully created BaseCommands directory!");
-		}else
-			logger.info("[BaseCommands] Successfully Plugin directory!");
-		try
-		{
-			boolean success11 = (new File("plugins/BaseCommands/spawn.txt")).createNewFile();
-			if(success11)
-			{
-				logger.info(pdfFile.getName() + " Successfully created spawn file!");
-				Writer output = new FileWriter("plugins/BaseCommands/spawn.txt", true);
-				output.write("0,0,0,0,0,0");
-				output.close();
-				logger.info("[BaseCommands] Set spawn.txt to default spawn!");
-				logger.severe(PREFIX +"If this is the first time using this plugin please reload the server for the other directories to be made");
-				logger.severe(PREFIX + "if this is not the first time then you can just ignore this message");
-			}else{
-				logger.info("[BaseCommands] Successfully loaded spawn File!");
-			}
-		}
-		catch(IOException x)
-		{
-			System.out.println(x.toString());
-		}
-		
+    	WDIR();
     	
+    	PDIR();
 	}
-	
 	
 	@Override
 	public void onDisable() {
@@ -197,5 +161,52 @@ public class BaseCommands extends JavaPlugin implements Listener{
 			logger.info(pdfFile.getName() + "Found and hooked into " + permissionProvider.getProvider().getName() + " with Vault!");
 		}
 		return (permission != null);
+	}	
+	
+	public void HDIR() {
+		boolean success = (new File("plugins/BaseCommands/homes/")).mkdir();
+		if(success){
+			logger.info("[BaseCommands] Successfully created homes directory!");
+		}else{
+			logger.info("[BaseCommands] Successfully loaded homes directory!");
+		}
+	}
+	
+	public void WDIR() {
+		boolean success2 = (new File("plugins/BaseCommands/warps/")).mkdir();
+		if(success2) {
+		logger.info("[BaseCommands] Successfully created warps directory!");	
+		}else{
+			logger.info("[BaseCommands] Successfully loaded warps directory!");
+		}
+	}
+	
+	public void PDIR() {
+		PluginDescriptionFile pdfFile = this.getDescription();
+		boolean success1 = (new File("plugins/BaseCommands/")).mkdir();
+		if(success1){
+			logger.info("[BaseCommands] Successfully created BaseCommands directory!");
+		}else
+			logger.info("[BaseCommands] Successfully Plugin directory!");
+		try
+		{
+			boolean success11 = (new File("plugins/BaseCommands/spawn.txt")).createNewFile();
+			if(success11)
+			{
+				logger.info(pdfFile.getName() + " Successfully created spawn file!");
+				Writer output = new FileWriter("plugins/BaseCommands/spawn.txt", true);
+				output.write("0,0,0,0,0,0");
+				output.close();
+				logger.info("[BaseCommands] Set spawn.txt to default spawn!");
+				logger.severe(PREFIX +"If this is the first time using this plugin please reload the server for the other directories to be Loaded");
+				logger.severe(PREFIX + "if this is not the first time then you can just ignore this message");
+			}else{
+				logger.info("[BaseCommands] Successfully loaded spawn File!");
+			}
+		}
+		catch(IOException x)
+		{
+			System.out.println(x.toString());
+		}	
 	}	
 }

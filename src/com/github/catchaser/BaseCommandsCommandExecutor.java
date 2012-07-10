@@ -18,6 +18,7 @@ import couk.Adamki11s.Extras.Events.*;
 
 @SuppressWarnings("unused")
 public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandExecutor {
+	
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	ExtrasEvents eevent = new ExtrasEvents();
 	public static final String PERM = ChatColor.RED + "You do not have that permission!";
