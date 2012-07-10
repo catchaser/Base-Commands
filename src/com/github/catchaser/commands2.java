@@ -1,0 +1,186 @@
+package com.github.catchaser;
+
+import org.bukkit.ChatColor;
+import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.*;
+
+import couk.Adamki11s.Extras.Events.ExtrasEvents;
+
+public class commands2 extends JavaPlugin implements CommandExecutor{
+	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
+	ExtrasEvents eevent = new ExtrasEvents();
+	public static final String PERM = ChatColor.RED + "You do not have that permission!";
+	
+	private BaseCommands plugin;
+	
+	public commands2(BaseCommands plugin) {
+		this.plugin = plugin;
+	}
+	
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		Player p = (Player) sender;
+		if(commandLabel.equalsIgnoreCase("time")) {
+			if(p.hasPermission("BC.env.time") == true || p.hasPermission("BC.env.*") == true || p.isOp() == true) {
+				// What are we setting to?
+                String time = "";
+                if(args.length > 0 && args[0] != null)
+                    time = args[0];
+
+                // Get worlds list
+                List<World> worlds = plugin.getServer().getWorlds();
+
+                // Get arg if exists
+                for(World world : worlds)
+                {
+                    if(time.compareToIgnoreCase("dawn") == 0)
+                        world.setTime(0);
+                    else if(time.compareToIgnoreCase("day") == 0)
+                        world.setTime(6000);
+                    else if(time.compareToIgnoreCase("dusk") == 0)
+                        world.setTime(12000);
+                    else if(time.compareToIgnoreCase("night") == 0)
+                        world.setTime(37700);
+                    else
+                        return false; // Failed
+                }
+
+                // Say we changed the Time
+                p.getServer().broadcastMessage(ChatColor.GRAY + "Time set to " + time.toLowerCase());
+			}else if(p.hasPermission("BC.env.time") == false || p.hasPermission("BC.env.*") == false) {
+				p.sendMessage(PERM);
+			}
+		}
+		if(commandLabel.equalsIgnoreCase("weather")) {
+			if(p.hasPermission("BC.env.weather") == true || p.hasPermission("BC.env.*") == true) {
+				// What are we setting to?
+                String weatherType = "";
+                if(args.length > 0 && args[0] != null)
+                    weatherType = args[0];
+
+                // Get worlds list
+                List<World> worlds = plugin.getServer().getWorlds();
+
+                // Get arg if exists
+                for(World world : worlds)
+                {
+                    if(weatherType.compareToIgnoreCase("sun") == 0)
+                        world.setStorm(false);
+                    else if(weatherType.compareToIgnoreCase("rain") == 0)
+                        world.setStorm(true);
+                    else if	(weatherType.compareToIgnoreCase("storm") == 0)
+                    	world.setThundering(true);
+                    else
+                        return false; // Failed
+                }
+
+                // Say we changed the weather
+                p.getServer().broadcastMessage(ChatColor.GRAY + "Weather set to " + weatherType.toLowerCase());
+			}else if(p.hasPermission("BC.env.weather") == false || p.hasPermission("BC.env.*") == false) {
+				p.sendMessage(PERM);
+			}
+		}
+		if(commandLabel.equalsIgnoreCase("kick")) {
+			if(p.hasPermission("BC.admin.kick") == true || p.hasPermission("BC.admin.*") == true) {
+            if(args.length < 1 || args.length > 2)
+                return false;
+            
+            // Kick with args
+            PlayerKick(p, args);
+            
+            p.getServer().broadcastMessage(ChatColor.RED + "\"" + p.getDisplayName() + "\" has kicked player \"" + args[0] + "\"");
+		  }else if(p.hasPermission("BC.admin.kick") == false || p.hasPermission("BC.admin.*") == false){
+			  p.sendMessage(PERM);
+		  }
+		}
+		if(commandLabel.equalsIgnoreCase("kill")) {
+			if(p.hasPermission("BC.heal.kill") == true || p.hasPermission("BC.heal.*") == true) {
+				// Do we have an arg?
+                if(args.length > 0)
+                {
+                    // For each arg
+                    for(int i = 0; i < args.length; i++)
+                    {
+                        // Get player and kill if target
+                        Player[] targetPlayer = plugin.getServer().getOnlinePlayers();
+                        for(int j = 0; j < targetPlayer.length; j++)
+                        {
+                            if(targetPlayer[j].getName().compareTo(args[i]) == 0)
+                            {
+                                targetPlayer[j].setHealth(0);
+                                p.sendMessage(ChatColor.GOLD + targetPlayer[j].getDisplayName() + "has been killed");
+                                targetPlayer[j].sendMessage(ChatColor.GRAY + "You have been killed by " + p.getName());
+                            }
+                        }
+                    }
+                }
+                // Else, kill self
+                else{
+                	p.sendMessage(ChatColor.GREEN + "Killing you!");
+                    p.setHealth(0);
+                }
+			}
+		}
+		return false;
+	}
+	
+    private void PlayerKick(Player player, String[] args)
+    {
+        // Get the target player
+        Player target = plugin.getServer().getPlayer(args[0]);
+        if(target == null && player != null)
+        {
+            player.sendMessage(ChatColor.GRAY + "Player \"" + args[0] + "\" is not online");
+            return;
+        }
+        
+        // Do we have a declared time?
+        int KickTime = -1;
+        if(args.length == 2)
+        {
+            try
+            {
+                KickTime = Integer.parseInt(args[1]);
+                if(KickTime < 0)
+                {
+                    if(player != null)
+                        player.sendMessage(ChatColor.GRAY + "Unable to kick; you cannot assign negative minutes");
+                    return;
+                }
+                else if(KickTime > 24 * 60)
+                {
+                    if(player != null)
+                        player.sendMessage(ChatColor.GRAY + "Unable to kick; you cannot assign greater than 24 hours");
+                    return;
+                }
+            }
+            catch(Exception e)
+            {
+                if(player != null)
+                    player.sendMessage(ChatColor.GRAY + "Unable to kick; unable parse time argument");
+                return;
+            }
+        }
+        // If player found, kick
+        if(target != null)
+        {
+            // Get kicker's name
+            String kickerName = player == null ? "Server Console" : player.getName();
+                //Kicking the player
+                target.kickPlayer("Kicked from the server by \"" + kickerName + "\"");
+                
+        }
+        // Else if player not found, send message iff its a player
+        else if(player != null)
+        {
+            player.sendMessage(ChatColor.GRAY + "Unable to kick player: player not found");
+        }
+        
+        // All done with kick
+    }
+}
