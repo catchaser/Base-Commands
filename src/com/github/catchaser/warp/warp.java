@@ -96,7 +96,7 @@ public class warp extends JavaPlugin implements CommandExecutor {
             }
         }
         if(commandLabel.equalsIgnoreCase("delwarp")) {
-        	if(args.length == 1) {
+        	if(!(args.length == 0)) {
         		if(p.hasPermission("BC.warp.del") || p.hasPermission("BC.warp.*")) {
         			File warpFile = new File("plugins/BaseCommands/warps/" + args [0] + ".txt");
         			warpFile.delete();
