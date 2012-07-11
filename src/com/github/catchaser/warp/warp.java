@@ -63,13 +63,13 @@ public class warp extends JavaPlugin implements CommandExecutor {
             {
                 System.out.println(x.toString());
             }
-          }else if(p.hasPermission("BC.warp.set") == false || p.hasPermission("BC.warp.*") == false) {
+          }else if(!(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*"))) {
         	  p.sendMessage(PERM);
           }
         }
         if(commandLabel.equalsIgnoreCase("warp")) {
             if(!(args.length == 0)) {
-            	if(p.isOp() == true) {
+            	if(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*")) {
             		try{
             			//reading the warp file
         				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/warps/" + args[0] + ".txt"));
@@ -88,7 +88,7 @@ public class warp extends JavaPlugin implements CommandExecutor {
         			{
         				System.out.println(ex.toString());
         			}
-            	}else if(p.hasPermission("BC.warp.warp") == false || p.hasPermission("BC.warp.*") == false) {
+            	}else if(!(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*"))) {
             		p.sendMessage(PERM);
             	}
             }else if(args.length == 1) {
@@ -96,7 +96,7 @@ public class warp extends JavaPlugin implements CommandExecutor {
             }
         }
         if(commandLabel.equalsIgnoreCase("delwarp")) {
-        	if(!(args.length == 0)) {
+        	if(args.length == 1) {
         		if(p.hasPermission("BC.warp.del") || p.hasPermission("BC.warp.*")) {
         			File warpFile = new File("plugins/BaseCommands/warps/" + args [0] + ".txt");
         			warpFile.delete();
