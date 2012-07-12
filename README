@@ -1,9 +1,67 @@
-Base Commands for Bukkit Server v1.31
+Base Commands for Bukkit (1.2.5 R4) Server v1.34
 
 Change Log:
-V1.31
+
+v1.34:
 added commands:
 -tphere
 added/changed permissions:
-BC.tp.p2p now has a different command for it /tp <player1> <player2>
-BC.tp.2p teleports current player to the target player
+BC.tp.2p: for teleporting to a player
+BC.tp.p2p: for teleporting a player to another player
+BC.tp.here: for teleporting a player to your location
+-fixed setwarp when not given a warp name
+-fixed the rules command
+v1.21
+-fixed the permissions for the warp command
+v1.2
+added commands:
+-nickname
+-bcversion
+-feed
+v1.02
+-fixed the tp command
+-fixed the heal command (for healing others)
+v1.01
+-fixed start-up BaseCommands thinking that its missing a important File
+v1.0
+-added commands:
+-ban
+-unban
+readded commands
+-Kick
+-kill
+MOTD now changeable in the config file
+readded permissions for ginfo and ginfo2
+v0.81
+-added commands
+-warp
+-setwarp
+-delwarp
+-fixed whoiso
+temp removed:
+-kill
+-ignite
+-stop
+-added PERMISSIONS
+v0.5979
+-fixed error when starting server
+v0.5978
+-Added home and sethome commands
+-fixed file saving multiple homes in the same world
+V0.4
+Fixed the stop command
+Added command
+-whoiso
+V0.36
+Added: commands: spawn and setspawn
+V0.2:  Added commands:
+-Fly
+-dfly
+-stop
+-tp
+-ginfo
+-ginfo2
+V0.1 Created Basecommands with commands:
+-ban
+-heal
+-kill

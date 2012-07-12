@@ -33,36 +33,40 @@ public class warp extends JavaPlugin implements CommandExecutor {
         Player p = (Player) sender;
         if(commandLabel.equalsIgnoreCase("setwarp")) {
         	if(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*")) {
-            try
-            {
-                //Checking to see if there is already a warp file
-                boolean success11 = (new File("plugins/BaseCommands/warps/" + args [0] + ".txt")).createNewFile();
-                if(success11)
-                {
-                    //writing location of player to the warp file
-                    Writer output = new FileWriter("plugins/BaseCommands/warps/" + args [0] + ".txt", true);
-                    output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
-                    output.close();
-                    p.sendMessage(ChatColor.GREEN +"Warp Created!");
-                }else if(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists()){ // checks to see if it already exsits
-                	File warp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
-                	//deletes old file
-                	warp.delete();
-                	File nwarp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
-                	nwarp.createNewFile();
-                	//creates new warp file with same name just different location
-                    //writing location of player to the warp file
-                    Writer output = new FileWriter("plugins/BaseCommands/warps/" + args [0] + ".txt", true);
-                    output.flush();
-                    output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
-                    output.close();
-                    p.sendMessage(ChatColor.GREEN +"Warp Created!");
-                }
-            }
-            catch(IOException x)
-            {
-                System.out.println(x.toString());
-            }
+        		if(args.length  == 1) {
+        			try
+                    {
+                        //Checking to see if there is already a warp file
+                        boolean success11 = (new File("plugins/BaseCommands/warps/" + args [0] + ".txt")).createNewFile();
+                        if(success11)
+                        {
+                            //writing location of player to the warp file
+                            Writer output = new FileWriter("plugins/BaseCommands/warps/" + args [0] + ".txt", true);
+                            output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
+                            output.close();
+                            p.sendMessage(ChatColor.GREEN +"Warp Created!");
+                        }else if(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists()){ // checks to see if it already exsits
+                        	File warp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
+                        	//deletes old file
+                        	warp.delete();
+                        	File nwarp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
+                        	nwarp.createNewFile();
+                        	//creates new warp file with same name just different location
+                            //writing location of player to the warp file
+                            Writer output = new FileWriter("plugins/BaseCommands/warps/" + args [0] + ".txt", true);
+                            output.flush();
+                            output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
+                            output.close();
+                            p.sendMessage(ChatColor.GREEN +"Warp Created!");
+                        }
+                    }
+                    catch(IOException x)
+                    {
+                        System.out.println(x.toString());
+                    }
+        		}else if(!(args.length == 1)) {
+        			p.sendMessage(ChatColor.RED  + "Usage: /setwarp <warpname>");
+        		}
           }else if(!(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*"))) {
         	  p.sendMessage(PERM);
           }

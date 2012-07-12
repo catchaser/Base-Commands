@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 1.31
+version: 1.34
 description:  >
              Basic Commands for a bukkit server (for now permissions sre if the player is OP)
 Author: catchaser9620
@@ -117,11 +117,15 @@ permissions:
     children:
             BC.tp.2p: true
             BC.tp.p2p: true
+            BC.tp.here: true
   BC.tp.2p:
        description: Teleports the current player to another player
        default: op
   BC.tp.p2p:
        description: Teleports a player to another player
+       default: op
+  BC.tp.here:
+       description: Teleports a player to the current player
        default: op
   BC.flight.*:
     description: Allows all flight commands

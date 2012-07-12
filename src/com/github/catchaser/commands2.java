@@ -46,6 +46,14 @@ public class commands2 extends JavaPlugin implements CommandExecutor{
                         world.setTime(12000);
                     else if(time.compareToIgnoreCase("night") == 0)
                         world.setTime(37700);
+                    else if(time.compareToIgnoreCase("0") == 0)
+                    	world.setTime(0);
+                    else if(time.compareToIgnoreCase("6") == 0)
+                    	world.setTime(6000);
+                    else if(time.compareToIgnoreCase("12") == 0)
+                    	world.setTime(12000);
+                    else if(time.compareToIgnoreCase("377") == 0)
+                    	world.setTime(37700);
                     else
                         return false; // Failed
                 }
@@ -75,7 +83,7 @@ public class commands2 extends JavaPlugin implements CommandExecutor{
                         world.setStorm(true);
                     else if	(weatherType.compareToIgnoreCase("storm") == 0)
                     	world.setThundering(true);
-                    else
+                    else 
                         return false; // Failed
                 }
 
@@ -92,8 +100,8 @@ public class commands2 extends JavaPlugin implements CommandExecutor{
             
             // Kick with args
             PlayerKick(p, args);
-            
-            p.getServer().broadcastMessage(ChatColor.RED + "\"" + p.getDisplayName() + "\" has kicked player \"" + args[0] + "\"");
+            Player target = p.getServer().getPlayer(args[0]);
+            p.getServer().broadcastMessage(ChatColor.RED + p.getDisplayName() + " has kicked player " + target.getName());
 		  }else if(p.hasPermission("BC.admin.kick") == false || p.hasPermission("BC.admin.*") == false){
 			  p.sendMessage(PERM);
 		  }

@@ -56,20 +56,20 @@ public class misc implements CommandExecutor{
 			if(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*")) {
 				if(args.length  == 0) {
 					p.setFoodLevel(20);
-					p.sendMessage(PREFIX + ChatColor.GOLD + " Food level restored");
+					p.sendMessage(ChatColor.GOLD + " Food level restored");
 					return true;
 				}else if(args.length == 1) {
 					Player TP = p.getServer().getPlayer(args[0]);
 					if(TP != null) {
 					TP.setFoodLevel(20);
-					TP.sendMessage(PREFIX + ChatColor.GOLD + " Foodlevel restoredby: " + p.getName());
-					p.sendMessage(PREFIX + ChatColor.GOLD + " you restored: " + TP.getName() + "'s food level");
+					TP.sendMessage(ChatColor.GOLD + " Foodlevel restoredby: " + p.getName());
+					p.sendMessage(ChatColor.GOLD + " you restored: " + TP.getName() + "'s food level");
 					return true;
 					}else if(TP == null) {
-						p.sendMessage(PREFIX + ChatColor.RED + " Player not online!");
+						p.sendMessage(ChatColor.RED + " Player not online!");
 					}
 				}else if(args.length >= 2) {
-					p.sendMessage(PREFIX + ChatColor.YELLOW + "Usage: /feed <player> < > = optional for this command");
+					p.sendMessage(ChatColor.YELLOW + "Usage: /feed <player> < > = optional for this command");
 					return true;
 				}
 			}else if(!(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*"))) {

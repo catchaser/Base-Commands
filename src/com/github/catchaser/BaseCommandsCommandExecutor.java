@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,6 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	ExtrasEvents eevent = new ExtrasEvents();
 	public static final String PERM = ChatColor.RED + "You do not have that permission!";
-
 	private BaseCommands plugin;
 	 
 	public BaseCommandsCommandExecutor(BaseCommands plugin) {
@@ -124,29 +124,40 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 		}
 		if(commandLabel.equalsIgnoreCase("fly")) {
 			if(player.hasPermission("BC.fight.fly") == true || player.hasPermission("BC.flight.*") == true) {
-				player.setAllowFlight(true);
-				player.sendMessage(ChatColor.GOLD + "Flying now enabled!");
+				if(args.length == 0) {
+					if(player.getAllowFlight() == true) {
+						player.sendMessage(ChatColor.GREEN + "Flying already Enabled");
+					}else if(player.getAllowFlight() == false) {
+						player.setAllowFlight(true);
+						player.sendMessage(ChatColor.GOLD + "Flying now enabled!");
+					}
+				}else if(!(args.length == 0)) {
+				player.sendMessage(ChatColor.RED + "Usage: /dfly");
+				}
 			}else if(player.hasPermission("BC.fight.fly") == false || player.hasPermission("BC.flight.*") == false) {
 				player.sendMessage(PERM);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("dfly")) {
 			if(player.hasPermission("BC.flight.dfly") == true || player.hasPermission("BC.flight.*") == true) {
-			if(player.getAllowFlight() == true) {
-				player.setAllowFlight(false);
-				player.sendMessage(ChatColor.GOLD + "Flying now disabled!");
-			}else if(player.getAllowFlight() == false) {
-				player.sendMessage(ChatColor.GREEN + "Flying already disabled");
-			}
+				if(args.length == 0) {
+					if(player.getAllowFlight() == true) {
+						player.setAllowFlight(false);
+						player.sendMessage(ChatColor.GOLD + "Flying now disabled!");
+					}else if(player.getAllowFlight() == false) {
+						player.sendMessage(ChatColor.GREEN + "Flying already disabled");
+					}
+				}else if(!(args.length == 0)) {
+					player.sendMessage(ChatColor.RED + "Usage: /dfly");
+				}
 		  }else if(player.hasPermission("BC.flight.dfly") == false || player.hasPermission("BC.flight.*") == false) {
 			  player.sendMessage(PERM);
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("rules")) {
-			java.util.List<String>  rule = getConfig().getStringList("rules");
-            for (String r : rule)
-            	player.sendMessage(r); 
-            return false;
+			List<String>  rule = plugin.getConfig().getStringList("rules");
+			for(String r : rule)
+				player.sendMessage(r);
 		}
 		if(commandLabel.equalsIgnoreCase("whoiso")) {
 			if(player.hasPermission("BC.who.iso") == true) {
