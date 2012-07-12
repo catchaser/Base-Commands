@@ -160,6 +160,9 @@ public class BaseCommands extends JavaPlugin implements Listener{
     	getCommand("tp").setExecutor(myExecutor);
     	
     	myExecutor = new BaseCommandsCommandExecutor(this);
+    	getCommand("tphere").setExecutor(myExecutor);
+    	
+    	myExecutor = new BaseCommandsCommandExecutor(this);
     	getCommand("whoiso").setExecutor(myExecutor);
     	
     	myExecutor2 = new ginfo(this);

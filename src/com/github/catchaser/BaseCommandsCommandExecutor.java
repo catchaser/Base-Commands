@@ -1,6 +1,5 @@
 package com.github.catchaser;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -60,10 +59,11 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
 				}
 		}
 		if(commandLabel.equalsIgnoreCase("tp")) {
-			if(player.hasPermission("BC.tp.*")|| player.hasPermission("BC.tp.p2p")) {
+			if(player.hasPermission("BC.tp.*")|| player.hasPermission("BC.tp.2p")) {
 				if(args.length == 0) {
 					eC.sendMultiColouredMessage(player, "You must select a player");
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
+					return true;
 				}else if(args.length == 1) {
 					Player targetPlayer = player.getServer().getPlayer(args[0]);
 					  if(targetPlayer == null){
@@ -75,10 +75,50 @@ public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandEx
                     player.sendMessage(ChatColor.GOLD + "You teleported to: " + "" + targetPlayer.getName());
                     return true;
 	                    }
-				}else if(args.length >= 2) {
-					player.sendMessage(ChatColor.WHITE + PREFIX + ChatColor.BLUE + " Not yet supported!");
+				}else if(args.length == 2) {
+					if(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*")) {
+					Player TP1 = player.getServer().getPlayer(args[0]);
+					Player TP2 = player.getServer().getPlayer(args[1]);
+					if(TP1 == null || TP2 == null) 
+					{
+						player.sendMessage(PREFIX  + ChatColor.GREEN  + " Ether one or both of he players are offline!");
+						return true;
+					}
+					Location Loc = TP2.getLocation();
+					TP1.teleport(Loc);
+					TP1.sendMessage(ChatColor.BLUE + " You were teleported to:" + TP2.getName() + " by: " + player.getName());
+					}else if(!(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*"))) {
+						player.sendMessage(PERM);
+					}
+				}else if(args.length >= 3) {
+					eC.sendColouredMessage(player, "Usage: /tp <player>");
 				}
 			}else if(!(player.hasPermission("BC.tp.*") || player.hasPermission("BC.tp.p2p"))) {
+				player.sendMessage(PERM);
+			}
+		}
+		if(commandLabel.equalsIgnoreCase("tphere")) {
+			if(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*")) {
+				if(args.length == 0) {
+					player.sendMessage(ChatColor.RED + "You must select a player");
+				}else if(args.length == 1) {
+					Player TP = player.getServer().getPlayer(args[0]);
+					if(TP == null) {
+						player.sendMessage(ChatColor.GREEN + "Player not online!");
+					}else if(TP != null) {
+						Location loc = player.getLocation();
+						TP.teleport(loc);
+						TP.sendMessage(ChatColor.GOLD + "You were teleported to: " + player.getName());
+						player.sendMessage(ChatColor.GOLD + "You teleported: " + TP.getName() + " to you!");
+					}
+				}else if(args.length == 2) {
+					if(args[2] == "all") {
+						player.sendMessage(PREFIX + " Not yet Supported");
+					}
+				}else if(args.length >= 3) {
+					player.sendMessage(PREFIX + " Nope!");
+				}
+			}else if(!(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*"))) {
 				player.sendMessage(PERM);
 			}
 		}

@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 1.2
+version: 1.31
 description:  >
              Basic Commands for a bukkit server (for now permissions sre if the player is OP)
 Author: catchaser9620
@@ -8,7 +8,9 @@ commands:
     heal:
       description: Heals the/a player
     tp:
-      description: Teleports the player to another player (Still in development)
+      description: Teleports the player 
+    tphere:
+      description: Teleports a player to your current location
     ginfo:
      description: Gathers info about the/a player
     ginfo2:
@@ -113,7 +115,11 @@ permissions:
   BC.tp.*:
     description: Allows a player to use all tp commands
     children:
+            BC.tp.2p: true
             BC.tp.p2p: true
+  BC.tp.2p:
+       description: Teleports the current player to another player
+       default: op
   BC.tp.p2p:
        description: Teleports a player to another player
        default: op

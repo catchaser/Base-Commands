@@ -22,9 +22,7 @@ public class BCListener implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel,
-			String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
 		
 		if(commandLabel.equalsIgnoreCase("spawn")){

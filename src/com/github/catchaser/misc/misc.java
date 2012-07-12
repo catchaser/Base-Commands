@@ -63,7 +63,7 @@ public class misc implements CommandExecutor{
 					if(TP != null) {
 					TP.setFoodLevel(20);
 					TP.sendMessage(PREFIX + ChatColor.GOLD + " Foodlevel restoredby: " + p.getName());
-					p.sendMessage(PREFIX + ChatColor.GOLD + " you retored: " + TP.getName() + "'s food level");
+					p.sendMessage(PREFIX + ChatColor.GOLD + " you restored: " + TP.getName() + "'s food level");
 					return true;
 					}else if(TP == null) {
 						p.sendMessage(PREFIX + ChatColor.RED + " Player not online!");
