@@ -1,14 +1,9 @@
-Base Commands for Bukkit Server v1.01
+Base Commands for Bukkit Server v1.31
 
-Please note that even though there is permission support its still in development
-All commands Completed expecting bugs
-
-Commands that might have bugs:
-
-tp
-
-kill
-
-heal
-
-
+Change Log:
+V1.31
+added commands:
+-tphere
+added/changed permissions:
+BC.tp.p2p now has a different command for it /tp <player1> <player2>
+BC.tp.2p teleports current player to the target player
