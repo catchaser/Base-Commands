@@ -2,6 +2,10 @@ Base Commands for Bukkit (1.2.5 R4) Server v1.34
 
 Change Log:
 
+
+v1.4:
+added color suport for the config file
+improved the home and warp commands
 v1.34:
 added commands:
 -tphere

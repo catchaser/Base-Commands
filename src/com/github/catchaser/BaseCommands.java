@@ -22,12 +22,14 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.catchaser.*;
-import com.github.catchaser.banning.*;
-import com.github.catchaser.home.*;
-import com.github.catchaser.spawn.*;
-import com.github.catchaser.warp.*;
-import com.github.catchaser.misc.*;
+import com.github.catchaser.banning.BanExecutor;
+import com.github.catchaser.banning.BanLogging;
+import com.github.catchaser.banning.ListStore;
+import com.github.catchaser.events.Loggingin_noban;
+import com.github.catchaser.home.home;
+import com.github.catchaser.misc.misc;
+import com.github.catchaser.spawn.BCListener;
+import com.github.catchaser.warp.warp;
 
 import couk.Adamki11s.Extras.Extras.Extras;
 
@@ -43,7 +45,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private commands2 myExecutor4;
 	private home myExecutorh;
 	private warp myExecutorw;
-	private misc misc;
+	private misc mis;
 	public static final String PREFIX ="[BaseCommands]";
 	public ListStore bannedPlayers;
 
@@ -53,14 +55,13 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
         Extras ex = new Extras("BaseCommands"); 
-        this.getConfig().options().copyDefaults(true);
-        this.saveConfig();
-        getServer().getPluginManager().registerEvents(new Listener() {
-            @EventHandler(priority = EventPriority.NORMAL)
-            public void playerJoin(PlayerJoinEvent event) {
-                event.getPlayer().sendMessage(getConfig().getString("MOTD"));
-            }
-        }, this);
+        if(new File("plugins/BaseCommands/config.yml").exists()) {
+			logger.info("[BaseCommands] Config Loaded");
+		}else{
+			 this.getConfig().options().copyDefaults(true);
+		    this.saveConfig();
+		    logger.info("[BaseCommands] Config Created");
+		}
         try {
         	if(new File("BC-Banned-Players.txt").exists()) {
             	this.bannedPlayers = new ListStore(new File("BC-banned-players.txt"));
@@ -78,6 +79,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
         
         LoadCommands();
         
+        this.getServer().getPluginManager().registerEvents(new Loggingin_noban(this), this);
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this);
 		
     	HDIR();
@@ -219,13 +221,13 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		MyExecutorb = new BanExecutor(this);
 		getCommand("unban").setExecutor(MyExecutorb);
 		
-		misc = new misc(this);
-		getCommand("nickname").setExecutor(misc);
+		mis = new misc(this);
+		getCommand("nickname").setExecutor(mis);
 		
-		misc = new misc(this);
-		getCommand("bcversion").setExecutor(misc);
+		mis = new misc(this);
+		getCommand("bcversion").setExecutor(mis);
 		
-		misc = new misc(this);
-		getCommand("feed").setExecutor(misc);
+		mis = new misc(this);
+		getCommand("feed").setExecutor(mis);
 	}
 }

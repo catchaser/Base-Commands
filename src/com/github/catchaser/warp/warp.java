@@ -18,6 +18,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
  
 import com.github.catchaser.BaseCommands;
+
+import couk.Adamki11s.Extras.Colour.ExtrasColour;
  
 public class warp extends JavaPlugin implements CommandExecutor {
     public static final Logger logger = Logger.getLogger("Minecraft");
@@ -31,6 +33,7 @@ public class warp extends JavaPlugin implements CommandExecutor {
  
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player p = (Player) sender;
+        ExtrasColour eC = new ExtrasColour();
         if(commandLabel.equalsIgnoreCase("setwarp")) {
         	if(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*")) {
         		if(args.length  == 1) {
@@ -74,24 +77,28 @@ public class warp extends JavaPlugin implements CommandExecutor {
         if(commandLabel.equalsIgnoreCase("warp")) {
             if(!(args.length == 0)) {
             	if(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*")) {
-            		try{
-            			//reading the warp file
-        				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/warps/" + args[0] + ".txt"));
-        				String ln = br.readLine();
-        				String coords[] = ln.split("\\,");
-        				br.close();
-        				if(Integer.parseInt(coords[0]) != 0)
-        				{
-        					//teleporting player to warp location
-        					Location warp = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
-        					p.teleport(warp);
-        					p.sendMessage(ChatColor.GOLD + "You teleported to: " + args[0]);
-        				}
-        			}
-        			catch(IOException ex)
-        			{
-        				System.out.println(ex.toString());
-        			}
+            		if(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists()) {
+            			try{
+                			//reading the warp file
+            				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/warps/" + args[0] + ".txt"));
+            				String ln = br.readLine();
+            				String coords[] = ln.split("\\,");
+            				br.close();
+            				if(Integer.parseInt(coords[0]) != 0)
+            				{
+            					//teleporting player to warp location
+            					Location warp = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
+            					p.teleport(warp);
+            					p.sendMessage(ChatColor.GOLD + "You teleported to: " + args[0]);
+            				}
+            			}
+            			catch(IOException ex)
+            			{
+            				System.out.println(ex.toString());
+            			}
+            		}else if(!(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists())) {
+            			eC.sendColouredMessage(p, "Warp does not exist please create one with /setwarp <warpname>");
+            		}
             	}else if(!(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*"))) {
             		p.sendMessage(PERM);
             	}
@@ -100,15 +107,19 @@ public class warp extends JavaPlugin implements CommandExecutor {
             }
         }
         if(commandLabel.equalsIgnoreCase("delwarp")) {
-        	if(!(args.length == 0)) {
+        	if(args.length == 1) {
         		if(p.hasPermission("BC.warp.del") || p.hasPermission("BC.warp.*")) {
-        			File warpFile = new File("plugins/BaseCommands/warps/" + args [0] + ".txt");
-        			warpFile.delete();
-        			p.sendMessage(ChatColor.BLUE + "warp: " + args [0] + " has beed deleted");
+        			if(new File("plugins/BaseCommands/warps/" + args[0] + ".txt").exists()) {
+        				File warpFile = new File("plugins/BaseCommands/warps/" + args [0] + ".txt");
+            			warpFile.delete();
+            			p.sendMessage(ChatColor.BLUE + "warp: " + args [0] + " has beed deleted");
+        			}else if(!(new File("plugins/BaseCommands/warps/" + args[0] + ".txt").exists())) {
+        				eC.sendMultiColouredMessage(p, "Warp does not exist!");
+        			}
         		}else if(p.hasPermission("BC.warp.del") == false || p.hasPermission("BC.warp.*") == false) {
         			p.sendMessage(PERM);
         		}
-        	}else {
+        	}else if(!(args.length == 1)) {
         		p.sendMessage(ChatColor.YELLOW + "Only delete one warp at a time!");
         	}
         }
