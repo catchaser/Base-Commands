@@ -48,19 +48,8 @@ public class warp extends JavaPlugin implements CommandExecutor {
                             output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
                             output.close();
                             p.sendMessage(ChatColor.GREEN +"Warp Created!");
-                        }else if(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists()){ // checks to see if it already exsits
-                        	File warp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
-                        	//deletes old file
-                        	warp.delete();
-                        	File nwarp = new File("plugins/BaseCommands/warps/" + args[0] + ".txt");
-                        	nwarp.createNewFile();
-                        	//creates new warp file with same name just different location
-                            //writing location of player to the warp file
-                            Writer output = new FileWriter("plugins/BaseCommands/warps/" + args [0] + ".txt", true);
-                            output.flush();
-                            output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
-                            output.close();
-                            p.sendMessage(ChatColor.GREEN +"Warp Created!");
+                        }else{ 
+                        	p.sendMessage(ChatColor.GREEN  + "Warp already exists");
                         }
                     }
                     catch(IOException x)
@@ -77,8 +66,10 @@ public class warp extends JavaPlugin implements CommandExecutor {
         if(commandLabel.equalsIgnoreCase("warp")) {
             if(!(args.length == 0)) {
             	if(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*")) {
-            		if(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists()) {
             			try{
+            				if(!(new File("plugins/BaseCommands/warps/" + args[0] + ".txt").exists())) {
+            					p.sendMessage(ChatColor.GREEN + "Warp does not exist!");
+            				}else{
                 			//reading the warp file
             				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/warps/" + args[0] + ".txt"));
             				String ln = br.readLine();
@@ -92,13 +83,11 @@ public class warp extends JavaPlugin implements CommandExecutor {
             					p.sendMessage(ChatColor.GOLD + "You teleported to: " + args[0]);
             				}
             			}
+            			}
             			catch(IOException ex)
             			{
             				System.out.println(ex.toString());
             			}
-            		}else if(!(new File("plugins/BaseCommands/warps" + args[0] + ".txt").exists())) {
-            			eC.sendColouredMessage(p, "Warp does not exist please create one with /setwarp <warpname>");
-            		}
             	}else if(!(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*"))) {
             		p.sendMessage(PERM);
             	}

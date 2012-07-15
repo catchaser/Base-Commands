@@ -1,6 +1,8 @@
 Base Commands for Bukkit (1.2.5 R4) Server v1.4
 
 
+v1.41:
+fixed warp command and reimproved it
 v1.4:
 added color suport for the config file
 improved the home and warp commands
