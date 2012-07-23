@@ -1,4 +1,4 @@
-package com.github.catchaser;
+package com.github.catchaser.commands;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,18 +14,20 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import com.github.catchaser.BaseCommands;
+
 import couk.Adamki11s.Extras.Colour.ExtrasColour;
 import couk.Adamki11s.Extras.Events.*;
 
 @SuppressWarnings("unused")
-public class BaseCommandsCommandExecutor extends JavaPlugin implements CommandExecutor {
+public class BCC1 extends JavaPlugin implements CommandExecutor {
 	
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	ExtrasEvents eevent = new ExtrasEvents();
 	public static final String PERM = ChatColor.RED + "You do not have that permission!";
 	private BaseCommands plugin;
 	 
-	public BaseCommandsCommandExecutor(BaseCommands plugin) {
+	public BCC1(BaseCommands plugin) {
 		this.plugin = plugin;
 	}
  

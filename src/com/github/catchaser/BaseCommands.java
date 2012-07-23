@@ -23,8 +23,10 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.banning.BanExecutor;
-import com.github.catchaser.banning.BanLogging;
 import com.github.catchaser.banning.ListStore;
+import com.github.catchaser.commands.BCC1;
+import com.github.catchaser.commands.BCC2;
+import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.Loggingin_noban;
 import com.github.catchaser.home.home;
 import com.github.catchaser.misc.misc;
@@ -37,12 +39,12 @@ import couk.Adamki11s.Extras.Extras.Extras;
 public class BaseCommands extends JavaPlugin implements Listener{
 	public static Logger logger = Logger.getLogger("Minecraft");
 	public static BaseCommands plugin;
-	private BaseCommandsCommandExecutor myExecutor;
+	private BCC1 myExecutor;
 	private ginfo myExecutor2;
 	public static Permission permission = null;
 	private BanExecutor MyExecutorb;
 	private BCListener myExecutor3;
-	private commands2 myExecutor4;
+	private BCC2 myExecutor4;
 	private home myExecutorh;
 	private warp myExecutorw;
 	private misc mis;
@@ -87,6 +89,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
     	WDIR();
     	
     	PDIR();
+    	
+    	Perm();
 	}
 	
 	@Override
@@ -131,7 +135,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		if(success1){
 			logger.info("[BaseCommands] Successfully created BaseCommands directory!");
 		}else
-			logger.info("[BaseCommands] Successfully Plugin directory!");
+			logger.info("[BaseCommands] Successfully Loaded Plugin directory!");
 		try
 		{
 			boolean success11 = (new File("plugins/BaseCommands/spawn.txt")).createNewFile();
@@ -155,79 +159,34 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	}	
 	
 	public void LoadCommands() {
-		myExecutor = new BaseCommandsCommandExecutor(this);
     	getCommand("heal").setExecutor(myExecutor);
-    	
-        myExecutor = new BaseCommandsCommandExecutor(this);
-    	getCommand("tp").setExecutor(myExecutor);
-    	
-    	myExecutor = new BaseCommandsCommandExecutor(this);
+    	getCommand("tp").setExecutor(myExecutor);  	
     	getCommand("rules").setExecutor(myExecutor);
-    	
-    	myExecutor = new BaseCommandsCommandExecutor(this);
-    	getCommand("tphere").setExecutor(myExecutor);
-    	
-    	myExecutor = new BaseCommandsCommandExecutor(this);
+    	getCommand("tphere").setExecutor(myExecutor);   	
     	getCommand("whoiso").setExecutor(myExecutor);
-    	
-    	myExecutor2 = new ginfo(this);
     	getCommand("ginfo").setExecutor(myExecutor2);
-    	
-    	myExecutor2 = new ginfo(this);
     	getCommand("ginfo2").setExecutor(myExecutor2);
-    	
-    	myExecutor = new BaseCommandsCommandExecutor(this);
-    	getCommand("fly").setExecutor(myExecutor);
-    	
-    	myExecutor = new BaseCommandsCommandExecutor(this);
-    	getCommand("dfly").setExecutor(myExecutor);
-    	
-    	myExecutor3 = new BCListener(this);
+    	getCommand("fly").setExecutor(myExecutor);  	
+    	getCommand("dfly").setExecutor(myExecutor);  	
     	getCommand("spawn").setExecutor(myExecutor3);
-    	
-    	myExecutor3 = new BCListener(this);
 		getCommand("setspawn").setExecutor(myExecutor3);
-		
-		myExecutorh = new home(this);
 		getCommand("home").setExecutor(myExecutorh);
-		
-		myExecutorh = new home(this);
 		getCommand("sethome").setExecutor(myExecutorh);
-		
-		myExecutorw = new warp(this);
 		getCommand("warp").setExecutor(myExecutorw);
-
-		myExecutorw = new warp(this);
 		getCommand("setwarp").setExecutor(myExecutorw);
-    	
-		myExecutorw = new warp(this);
 		getCommand("delwarp").setExecutor(myExecutorw);
-		
-		myExecutor4 = new commands2(this);
 		getCommand("time").setExecutor(myExecutor4);
-		
-		myExecutor4 = new commands2(this);
 		getCommand("weather").setExecutor(myExecutor4);
-		
-		myExecutor4 = new commands2(this);
 		getCommand("kill").setExecutor(myExecutor4);
-		
-		myExecutor4 = new commands2(this);
 		getCommand("kick").setExecutor(myExecutor4);
-		
-		MyExecutorb = new BanExecutor(this);
 		getCommand("ban").setExecutor(MyExecutorb);
-		
-		MyExecutorb = new BanExecutor(this);
 		getCommand("unban").setExecutor(MyExecutorb);
-		
-		mis = new misc(this);
 		getCommand("nickname").setExecutor(mis);
-		
-		mis = new misc(this);
 		getCommand("bcversion").setExecutor(mis);
-		
-		mis = new misc(this);
 		getCommand("feed").setExecutor(mis);
+	}
+	
+	public void Perm() {
+		
 	}
 }
