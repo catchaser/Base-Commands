@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.logging.Logger;
  
 import org.bukkit.ChatColor;
@@ -25,7 +26,6 @@ public class warp extends JavaPlugin implements CommandExecutor {
     public static final Logger logger = Logger.getLogger("Minecraft");
     private BaseCommands plugin;
     PluginDescriptionFile pdfFile = this.getDescription();
-	public static final String PERM = ChatColor.RED + "You do not have that permission!";
  
     public warp(BaseCommands plugin) {
         this.plugin = plugin;
@@ -60,7 +60,9 @@ public class warp extends JavaPlugin implements CommandExecutor {
         			p.sendMessage(ChatColor.RED  + "Usage: /setwarp <warpname>");
         		}
           }else if(!(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*"))) {
-        	  p.sendMessage(PERM);
+				List<String>  perm = plugin.getConfig().getStringList("PERM");
+				for(String per : perm)
+					p.sendMessage(per);
           }
         }
         if(commandLabel.equalsIgnoreCase("warp")) {
@@ -89,7 +91,9 @@ public class warp extends JavaPlugin implements CommandExecutor {
             				System.out.println(ex.toString());
             			}
             	}else if(!(p.hasPermission("BC.warp.warp") || p.hasPermission("BC.warp.*"))) {
-            		p.sendMessage(PERM);
+    				List<String>  perm = plugin.getConfig().getStringList("PERM");
+    				for(String per : perm)
+    					p.sendMessage(per);
             	}
             }else if(args.length == 1) {
             	p.sendMessage(ChatColor.BLUE + "usage /warp <warpname>");
@@ -106,7 +110,9 @@ public class warp extends JavaPlugin implements CommandExecutor {
         				eC.sendMultiColouredMessage(p, "Warp does not exist!");
         			}
         		}else if(p.hasPermission("BC.warp.del") == false || p.hasPermission("BC.warp.*") == false) {
-        			p.sendMessage(PERM);
+    				List<String>  perm = plugin.getConfig().getStringList("PERM");
+    				for(String per : perm)
+    					p.sendMessage(per);
         		}
         	}else if(!(args.length == 1)) {
         		p.sendMessage(ChatColor.YELLOW + "Only delete one warp at a time!");

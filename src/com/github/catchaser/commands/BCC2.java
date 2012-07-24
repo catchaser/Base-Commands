@@ -17,7 +17,6 @@ import couk.Adamki11s.Extras.Events.ExtrasEvents;
 public class BCC2 extends JavaPlugin implements CommandExecutor{
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	ExtrasEvents eevent = new ExtrasEvents();
-	public static final String PERM = ChatColor.RED + "You do not have that permission!";
 	
 	private BaseCommands plugin;
 	
@@ -28,7 +27,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
 		if(commandLabel.equalsIgnoreCase("time")) {
-			if(p.hasPermission("BC.env.time") == true || p.hasPermission("BC.env.*") == true || p.isOp() == true) {
+			if(p.hasPermission("BC.env.time")|| p.hasPermission("BC.env.*")) {
 				// What are we setting to?
                 String time = "";
                 if(args.length > 0 && args[0] != null)
@@ -54,7 +53,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                     	world.setTime(6000);
                     else if(time.compareToIgnoreCase("12") == 0)
                     	world.setTime(12000);
-                    else if(time.compareToIgnoreCase("377") == 0)
+                    else if(time.compareToIgnoreCase("24") == 0)
                     	world.setTime(37700);
                     else
                         return false; // Failed
@@ -62,12 +61,14 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 
                 // Say we changed the Time
                 p.getServer().broadcastMessage(ChatColor.GRAY + "Time set to " + time.toLowerCase());
-			}else if(p.hasPermission("BC.env.time") == false || p.hasPermission("BC.env.*") == false) {
-				p.sendMessage(PERM);
+			}else if(!(p.hasPermission("BC.env.time") || p.hasPermission("BC.env.*"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					p.sendMessage(per);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("weather")) {
-			if(p.hasPermission("BC.env.weather") == true || p.hasPermission("BC.env.*") == true) {
+			if(p.hasPermission("BC.env.weather") || p.hasPermission("BC.env.*")) {
 				// What are we setting to?
                 String weatherType = "";
                 if(args.length > 0 && args[0] != null)
@@ -91,12 +92,14 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 
                 // Say we changed the weather
                 p.getServer().broadcastMessage(ChatColor.GRAY + "Weather set to " + weatherType.toLowerCase());
-			}else if(p.hasPermission("BC.env.weather") == false || p.hasPermission("BC.env.*") == false) {
-				p.sendMessage(PERM);
+			}else if(!(p.hasPermission("BC.env.weather") || p.hasPermission("BC.env.*"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					p.sendMessage(per);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("kick")) {
-			if(p.hasPermission("BC.admin.kick") == true || p.hasPermission("BC.admin.*") == true) {
+			if(p.hasPermission("BC.admin.kick") || p.hasPermission("BC.admin.*")) {
             if(args.length < 1 || args.length > 2)
                 return false;
             
@@ -104,12 +107,14 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
             PlayerKick(p, args);
             Player target = p.getServer().getPlayer(args[0]);
             p.getServer().broadcastMessage(ChatColor.RED + p.getDisplayName() + " has kicked player " + target.getName());
-		  }else if(p.hasPermission("BC.admin.kick") == false || p.hasPermission("BC.admin.*") == false){
-			  p.sendMessage(PERM);
+		  }else if(!(p.hasPermission("BC.admin.kick") || p.hasPermission("BC.admin.*"))){
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					p.sendMessage(per);
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("kill")) {
-			if(p.hasPermission("BC.heal.kill") == true || p.hasPermission("BC.heal.*") == true) {
+			if(p.hasPermission("BC.heal.kill") || p.hasPermission("BC.heal.*")) {
 				// Do we have an arg?
                 if(args.length > 0)
                 {
@@ -134,6 +139,10 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                 	p.sendMessage(ChatColor.GREEN + "Killing you!");
                     p.setHealth(0);
                 }
+			}else if(!(p.hasPermission("BC.heal.kill") || p.hasPermission("BC.heal.*"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					p.sendMessage(per);
 			}
 		}
 		return false;

@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -24,9 +26,8 @@ public class BCListener implements CommandExecutor {
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
-		
 		if(commandLabel.equalsIgnoreCase("spawn")){
-			if(player.hasPermission("BC.home.spawn") == true || player.hasPermission("BC.home.*")) {
+			if(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*")) {
 			try
 			{
 				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/spawn.txt"));
@@ -46,13 +47,14 @@ public class BCListener implements CommandExecutor {
 				System.out.println(ex.toString());
 			}
 			return true;
-			}else if(player.hasPermission("BC.home.spawn") == false || player.hasPermission("BC.home.*") == false){
-				player.sendMessage(PERM);
+			}else if(!(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*"))){
+				List<String>  perm = plugin.getConfig().getStringList("PERM");
+				for(String per : perm)
+					player.sendMessage(per);
 			}
 			}
 		if(commandLabel.equalsIgnoreCase("setspawn")){
-			if(player.hasPermission("BC.home.setspawn") ==true || player.hasPermission("BC.home.*") == true){
-
+			if(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*")){
 			try
 			{
                 Writer output = new FileWriter("plugins/BaseCommands/spawn.txt", false);
@@ -68,8 +70,10 @@ public class BCListener implements CommandExecutor {
 				System.out.println(ex.toString());
 			}
 			
-		}else if(player.hasPermission("BC.home.setspawn") == false || player.hasPermission("BC.home.*") == false){
-			player.sendMessage(PERM);
+		}else if(!(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*"))){
+			List<String>  perm = plugin.getConfig().getStringList("PERM");
+			for(String per : perm)
+				player.sendMessage(per);
 		}
 			return true;
 		}

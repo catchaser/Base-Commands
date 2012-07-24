@@ -18,9 +18,9 @@ public class BCC3 extends JavaPlugin implements CommandExecutor{
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		@SuppressWarnings("unused")
 		Player p = (Player) sender;
-		
-		if(commandLabel.equalsIgnoreCase("")) {
+		if(commandLabel.equalsIgnoreCase("perms")) {
 			
 		}
 		

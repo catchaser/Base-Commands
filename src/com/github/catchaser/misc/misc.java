@@ -1,5 +1,7 @@
 package com.github.catchaser.misc;
 
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,7 +46,9 @@ public class misc implements CommandExecutor{
 					return true;
 				}
 			}else if(!p.hasPermission("BC.name.nick")) {
-				p.sendMessage(PERM);
+				List<String>  perm = plugin.getConfig().getStringList("PERM");
+				for(String per : perm)
+					p.sendMessage(per);
 				return true;
 			}
 		}

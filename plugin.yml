@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 1.41
+version: 2.0
 description:  >
              Basic Commands for a bukkit server (for now permissions sre if the player is OP)
 Author: catchaser9620

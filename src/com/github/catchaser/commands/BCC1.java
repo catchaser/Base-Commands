@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+
 import com.github.catchaser.BaseCommands;
 
 import couk.Adamki11s.Extras.Colour.ExtrasColour;
@@ -24,7 +25,6 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 	
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	ExtrasEvents eevent = new ExtrasEvents();
-	public static final String PERM = ChatColor.RED + "You do not have that permission!";
 	private BaseCommands plugin;
 	 
 	public BCC1(BaseCommands plugin) {
@@ -40,8 +40,10 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 					if(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*")) {
 					player.setHealth(20);
 					player.sendMessage(ChatColor.GOLD + "Healed");
-					}else if(player.hasPermission("BC.heal.self") == false || player.hasPermission("BC.heal.*")== false) {
-						player.sendMessage(PERM);
+					}else if(!(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*"))) {
+						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+						for(String per : perm)
+							player.sendMessage(per);
 					}
 				}else if(args.length == 1) {
 					if(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*")) {
@@ -53,8 +55,10 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 						}else if(TargetP == null) {
 							player.sendMessage(ChatColor.GREEN + "Player is not online");
 						}
-					}else if(player.hasPermission("BC.heal.other") == false || player.hasPermission("BC.heal.*")) {
-						player.sendMessage(PERM);
+					}else if(!(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*"))) {
+						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+						for(String per : perm)
+							player.sendMessage(per);
 					}
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.GREEN + "Please only do one player at a time");
@@ -83,20 +87,24 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 					Player TP2 = player.getServer().getPlayer(args[1]);
 					if(TP1 == null || TP2 == null) 
 					{
-						player.sendMessage(PREFIX  + ChatColor.GREEN  + " Ether one or both of he players are offline!");
+						player.sendMessage(ChatColor.GREEN  + "Ether one or both of he players are offline!");
 						return true;
 					}
 					Location Loc = TP2.getLocation();
 					TP1.teleport(Loc);
 					TP1.sendMessage(ChatColor.BLUE + " You were teleported to:" + TP2.getName() + " by: " + player.getName());
 					}else if(!(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*"))) {
-						player.sendMessage(PERM);
+						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+						for(String per : perm) 
+							player.sendMessage(per);
 					}
 				}else if(args.length >= 3) {
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
 				}
 			}else if(!(player.hasPermission("BC.tp.*") || player.hasPermission("BC.tp.p2p"))) {
-				player.sendMessage(PERM);
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					player.sendMessage(per);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("tphere")) {
@@ -115,13 +123,15 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 					}
 				}else if(args.length == 2) {
 					if(args[2] == "all") {
-						player.sendMessage(PREFIX + " Not yet Supported");
+						player.sendMessage(ChatColor.RED + "Not yet Supported");
 					}
 				}else if(args.length >= 3) {
-					player.sendMessage(PREFIX + " Nope!");
+					player.sendMessage(ChatColor.GOLD + "Nope!");
 				}
 			}else if(!(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*"))) {
-				player.sendMessage(PERM);
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					player.sendMessage(per);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("fly")) {
@@ -136,33 +146,40 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}else if(!(args.length == 0)) {
 				player.sendMessage(ChatColor.RED + "Usage: /dfly");
 				}
-			}else if(player.hasPermission("BC.fight.fly") == false || player.hasPermission("BC.flight.*") == false) {
-				player.sendMessage(PERM);
+			}else if(!(player.hasPermission("BC.fight.fly") || player.hasPermission("BC.flight.*"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					player.sendMessage(per);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("dfly")) {
-			if(player.hasPermission("BC.flight.dfly") == true || player.hasPermission("BC.flight.*") == true) {
+			//Command for Disabling Flying
+			if(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*")) {
 				if(args.length == 0) {
-					if(player.getAllowFlight() == true) {
+					if(player.getAllowFlight()) { //checks if player is already allowed flight
 						player.setAllowFlight(false);
 						player.sendMessage(ChatColor.GOLD + "Flying now disabled!");
-					}else if(player.getAllowFlight() == false) {
+					}else if(!(player.getAllowFlight())) {
 						player.sendMessage(ChatColor.GREEN + "Flying already disabled");
 					}
 				}else if(!(args.length == 0)) {
 					player.sendMessage(ChatColor.RED + "Usage: /dfly");
 				}
-		  }else if(player.hasPermission("BC.flight.dfly") == false || player.hasPermission("BC.flight.*") == false) {
-			  player.sendMessage(PERM);
+		  }else if(!(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					player.sendMessage(per);
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("rules")) {
-			List<String>  rule = plugin.getConfig().getStringList("rules");
+			// Command for Displaying the rules in the config file
+			List<String>  rule = plugin.getConfig().getStringList("rules"); //locates and reads the string
 			for(String r : rule)
 				player.sendMessage(r);
 		}
 		if(commandLabel.equalsIgnoreCase("whoiso")) {
-			if(player.hasPermission("BC.who.iso") == true) {
+			// Command for Checking who is online on the server
+			if(player.hasPermission("BC.who.iso")) {
             String allPlayers = "";
             for(int i = 0; i < plugin.getServer().getOnlinePlayers().length; i++)
             {
@@ -175,8 +192,10 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
             // Print all
             player.sendMessage(ChatColor.GRAY + "Online Players: (" + plugin.getServer().getOnlinePlayers().length + ")");
             player.sendMessage(allPlayers);
-			}else if(player.hasPermission("BC.who.iso") == false) {
-				player.sendMessage(PERM);
+			}else if(!(player.hasPermission("BC.who.iso"))) {
+				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
+				for(String per : perm)
+					player.sendMessage(per);
 			}
 		}
 		return false;
