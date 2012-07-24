@@ -1,6 +1,10 @@
 Base Commands for Bukkit (1.2.5 R4) Server v1.4
 
 
+v2.0:
+rewrite/ moved/orginized source code
+added changable PERM string
+more to come
 v1.41:
 fixed warp command and reimproved it
 v1.4:

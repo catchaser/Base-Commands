@@ -144,7 +144,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 						player.sendMessage(ChatColor.GOLD + "Flying now enabled!");
 					}
 				}else if(!(args.length == 0)) {
-				player.sendMessage(ChatColor.RED + "Usage: /dfly");
+				player.sendMessage(ChatColor.RED + "Usage: /fly");
 				}
 			}else if(!(player.hasPermission("BC.fight.fly") || player.hasPermission("BC.flight.*"))) {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string

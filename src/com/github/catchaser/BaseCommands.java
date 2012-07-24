@@ -43,7 +43,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public static final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
 	public HomeStore house;
-	public static Permission perm = null;
+	public static Permission permission = null;
 	
 	@SuppressWarnings("static-access")
 	@Override
@@ -222,10 +222,10 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		if(new File("plugins/Vault.jar").exists()) {
 		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 		if(permissionProvider != null){
-			perm = permissionProvider.getProvider();
+			permission = permissionProvider.getProvider();
 			logger.info(PREFIX + " Found and hooked into " + permissionProvider.getProvider().getName() + " with Vault!");
 		}
-		return (perm != null);
+		return (permission != null);
 		}else {
 			logger.severe(PREFIX + " Vault not found Defaulting to OP/Bukkit Permissions!");
 		}
