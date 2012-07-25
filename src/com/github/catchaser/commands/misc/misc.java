@@ -1,4 +1,4 @@
-package com.github.catchaser.misc;
+package com.github.catchaser.commands.misc;
 
 import java.util.List;
 

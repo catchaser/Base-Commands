@@ -15,7 +15,7 @@ public class BanLogging implements Listener{
 	public BanLogging(BaseCommands plugin) {
 		this.plugin = plugin;
 	}
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerLogin(PlayerLoginEvent event) {
 		String playerName = event.getPlayer().getName();
 		

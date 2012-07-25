@@ -44,6 +44,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 						for(String per : perm)
 							player.sendMessage(per);
+						return true;
 					}
 				}else if(args.length == 1) {
 					if(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*")) {
@@ -59,6 +60,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 						for(String per : perm)
 							player.sendMessage(per);
+						return true;
 					}
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.GREEN + "Please only do one player at a time");
@@ -97,6 +99,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 						List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 						for(String per : perm) 
 							player.sendMessage(per);
+						return true;
 					}
 				}else if(args.length >= 3) {
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
@@ -105,6 +108,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
+				return true;
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("tphere")) {
@@ -132,6 +136,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
+				return true;
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("fly")) {
@@ -150,6 +155,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
+				return true;
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("dfly")) {
@@ -169,6 +175,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
+				return true;
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("rules")) {
@@ -196,6 +203,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
+				return true;
 			}
 		}
 		return false;

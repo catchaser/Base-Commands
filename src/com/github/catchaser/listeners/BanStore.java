@@ -1,4 +1,4 @@
-package com.github.catchaser.banning;
+package com.github.catchaser.listeners;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

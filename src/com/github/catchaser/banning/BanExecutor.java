@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.github.catchaser.BaseCommands;
+import com.github.catchaser.listeners.BanStore;
 
 public class BanExecutor implements CommandExecutor{
 	public static Logger logger = Logger.getLogger("Minecraft");

@@ -1,6 +1,8 @@
 package com.github.catchaser.home;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,14 +19,12 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.BaseCommands;
-import com.github.catchaser.home.HomeStore;
 
 import couk.Adamki11s.Extras.Colour.ExtrasColour;
 
 public class home extends JavaPlugin implements CommandExecutor {
 	public static final Logger logger = Logger.getLogger("Minecraft");
 	private BaseCommands plugin;
-	public HomeStore house;
 	public String loc;
 	public String name;
 	PluginDescriptionFile pdfFile = this.getDescription();
@@ -75,10 +76,28 @@ public class home extends JavaPlugin implements CommandExecutor {
 		if(commandLabel.equalsIgnoreCase("home")) {
 			if(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*")) {
 				if(new File("plugins/BaseCommands/homes/" + p.getName() + ".txt").exists()) {
-				house.load(p.getName());
-			}else if(!(new File("plugins/BaseCommands/homes/" + p.getName() + ".txt").exists())) {
-				eC.sendColouredMessage(p, "No home has been set! Set a home with /sethome");
-			}
+					try
+					{
+						//reading the players home file
+						BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/homes/" + p.getName() + ".txt"));
+						String ln = br.readLine();
+						String coords[] = ln.split("\\,");
+						br.close();
+						if(Integer.parseInt(coords[0]) != 0)
+						{
+							//teleporting player to home
+							Location loc = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
+							p.teleport(loc);
+							p.sendMessage(ChatColor.GOLD + "You teleported to home!");
+						}
+					}
+					catch(IOException ex)
+					{
+						System.out.println(ex.toString());
+					}
+				}else if(!(new File("plugins/BaseCommands/homes/" + p.getName() + ".txt").exists())) {
+					eC.sendColouredMessage(p, "No home has been set set a home with /sethome");
+				}
 		  }else if(!(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*"))) {
 				List<String>  perm = plugin.getConfig().getStringList("PERM");
 				for(String per : perm)

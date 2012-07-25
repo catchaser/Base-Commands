@@ -14,16 +14,17 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.banning.BanExecutor;
-import com.github.catchaser.banning.BanStore;
 import com.github.catchaser.commands.BCC1;
 import com.github.catchaser.commands.BCC2;
+import com.github.catchaser.commands.BCC3;
 import com.github.catchaser.commands.ginfo;
+import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.Loggingin_noban;
-import com.github.catchaser.home.HomeStore;
 import com.github.catchaser.home.home;
-import com.github.catchaser.misc.misc;
-import com.github.catchaser.spawn.BCListener;
+import com.github.catchaser.listeners.BCListener;
+import com.github.catchaser.listeners.BanStore;
+import com.github.catchaser.listeners.freezeListener;
 import com.github.catchaser.warp.warp;
 
 import couk.Adamki11s.Extras.Extras.Extras;
@@ -33,6 +34,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public static Logger logger = Logger.getLogger("Minecraft");
 	public static BaseCommands plugin;
 	private BCC1 BCC1e;
+	private BCC3 BCC3e;
 	private ginfo ginfoe;
 	private BanExecutor ban;
 	private BCListener spawn;
@@ -42,8 +44,9 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private misc mis;
 	public static final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
-	public HomeStore house;
 	public static Permission permission = null;
+	public final freezeListener fl = new freezeListener(this);
+	public boolean freeze = false;
 	
 	@SuppressWarnings("static-access")
 	@Override
@@ -79,10 +82,11 @@ public class BaseCommands extends JavaPlugin implements Listener{
         
         this.getServer().getPluginManager().registerEvents(new Loggingin_noban(this), this); // registers the MOTD on login event
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
+		this.getServer().getPluginManager().registerEvents(fl, this);
 		
     	HDIR();	
     	WDIR();
-    	PDIR();    	
+    	PDIR();
 	}
 	
 	@Override
@@ -215,6 +219,15 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		
 		mis = new misc(this);
 		getCommand("feed").setExecutor(mis);
+		
+		BCC3e = new BCC3(this);
+		getCommand("msg").setExecutor(BCC3e);
+		
+		BCC3e = new BCC3(this);
+		getCommand("freeze").setExecutor(BCC3e);
+		
+		BCC3e = new BCC3(this);
+		getCommand("unfreeze").setExecutor(BCC3e);
 	}
 	
 	public boolean setupPermissions(){ //loads the permissions using vualt

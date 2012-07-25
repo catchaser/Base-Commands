@@ -65,6 +65,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					p.sendMessage(per);
+				return true;
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("weather")) {
@@ -96,6 +97,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					p.sendMessage(per);
+				return true;
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("kick")) {
@@ -111,6 +113,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					p.sendMessage(per);
+				return true;
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("kill")) {
@@ -143,6 +146,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					p.sendMessage(per);
+				return true;
 			}
 		}
 		return false;

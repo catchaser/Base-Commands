@@ -1,4 +1,4 @@
-package com.github.catchaser.spawn;
+package com.github.catchaser.listeners;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,6 +36,11 @@ public class BCListener implements CommandExecutor {
 				br.close();
 				if(Integer.parseInt(coords[0]) != 0)
 				{
+					Location loc = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
+					player.teleport(loc);
+					player.sendMessage(ChatColor.GOLD + "You have teleported to the spawn!");
+					BaseCommands.logger.info("[BaseCommands] " + player + " has been teleported to the spawn!");
+				}else{
 					Location loc = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
 					player.teleport(loc);
 					player.sendMessage(ChatColor.GOLD + "You have teleported to the spawn!");

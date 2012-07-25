@@ -55,6 +55,12 @@ commands:
      description: Checks the version of both BaseCommands and Bukkit
     feed:
      description: Feeds the/a player
+    msg:
+     description: sends a message to a player
+    freeze:
+     description: freezes a player
+    unfreeze:
+     description: unfreezes a player
 permissions:
   BC.warp.*:
     description: Allows a player to use all the BC warp commands
@@ -90,8 +96,16 @@ permissions:
   BC.home.home:
         description: Allows a player to go home
         default: op
+  BC.who.*:
+    description: Allows all who/msg commands
+    children:
+            BC.who.iso: true
+            BC.who.msg: true
   BC.who.iso:
         description: Allows a player to check who is online
+        default: op
+  BC.who.msg:
+        description: sends a msg to a player
         default: op
   BC.heal.*:
         description: Allows a player to use all the heal commands
@@ -155,6 +169,8 @@ permissions:
             BC.admin.kick: true
             BC.admin.ban: true
             BC.admin.unban: true
+            BC.admin.freeze: true
+            BC.admin.unfreeze: true
   BC.admin.kick:
          description: Allows the kick command
          default: op
@@ -163,6 +179,12 @@ permissions:
          default: op
   BC.admin.unban:
          description: Allows the unban command
+         default: op
+  BC.admin.freeze:
+         description: freezes the player
+         default: op
+  BC.admin.unfreeze:
+         description: unfreezes a player
          default: op
   BC.name.nick:
          description: Allows the nickname command
