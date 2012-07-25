@@ -1,6 +1,8 @@
-Base Commands for Bukkit (1.2.5 R4) Server v2.0
+Base Commands for Bukkit (1.2.5 R4) Server v2.0.1
 
 
+v2.0.1:
+-fixed string in config PERM not showing
 v2.0:
 rewrite/ moved/orginized source code
 added changable PERM string

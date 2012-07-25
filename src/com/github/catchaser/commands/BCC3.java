@@ -1,12 +1,11 @@
 package com.github.catchaser.commands;
 
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import com.github.catchaser.BaseCommands;
 
 public class BCC3 implements CommandExecutor{
@@ -44,10 +43,11 @@ public class BCC3 implements CommandExecutor{
 				}
 				
 			}else if(!(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("freeze")) {
@@ -69,10 +69,11 @@ public class BCC3 implements CommandExecutor{
 					}
 				}
 			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("unfreeze")) {
@@ -94,10 +95,11 @@ public class BCC3 implements CommandExecutor{
 					}
 				}
 			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		return false;

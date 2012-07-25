@@ -1,7 +1,5 @@
 package com.github.catchaser.commands.misc;
 
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +10,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import com.github.catchaser.BaseCommands;
 
 public class misc implements CommandExecutor{
-	public static final String PERM = ChatColor.RED + "You do not have that permission!";
 	public static final String PREFIX = ChatColor.GREEN + "[BaseCommands]" + ChatColor.WHITE;
 	
 	private BaseCommands plugin;
@@ -46,10 +43,11 @@ public class misc implements CommandExecutor{
 					return true;
 				}
 			}else if(!p.hasPermission("BC.name.nick")) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("bcversion")) {
@@ -77,8 +75,11 @@ public class misc implements CommandExecutor{
 					return true;
 				}
 			}else if(!(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*"))) {
-				p.sendMessage(PERM);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		return false;

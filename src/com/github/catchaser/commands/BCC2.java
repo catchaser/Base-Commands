@@ -62,9 +62,11 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                 // Say we changed the Time
                 p.getServer().broadcastMessage(ChatColor.GRAY + "Time set to " + time.toLowerCase());
 			}else if(!(p.hasPermission("BC.env.time") || p.hasPermission("BC.env.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 				return true;
 			}
 		}
@@ -94,10 +96,11 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                 // Say we changed the weather
                 p.getServer().broadcastMessage(ChatColor.GRAY + "Weather set to " + weatherType.toLowerCase());
 			}else if(!(p.hasPermission("BC.env.weather") || p.hasPermission("BC.env.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("kick")) {
@@ -110,10 +113,11 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
             Player target = p.getServer().getPlayer(args[0]);
             p.getServer().broadcastMessage(ChatColor.RED + p.getDisplayName() + " has kicked player " + target.getName());
 		  }else if(!(p.hasPermission("BC.admin.kick") || p.hasPermission("BC.admin.*"))){
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("kill")) {
@@ -143,10 +147,11 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                     p.setHealth(0);
                 }
 			}else if(!(p.hasPermission("BC.heal.kill") || p.hasPermission("BC.heal.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
-				return true;
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		return false;
