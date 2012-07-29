@@ -26,10 +26,10 @@ import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.home.home;
-import com.github.catchaser.listeners.BCListener;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
 import com.github.catchaser.listeners.namestore;
+import com.github.catchaser.spawn.BCListener;
 import com.github.catchaser.warp.warp;
 
 import couk.Adamki11s.Extras.Extras.Extras;
@@ -66,12 +66,17 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
 		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
 		
+		logger.info(PREFIX + " Loading BaseCommands Directory");
+		PDIR();
+		logger.info(PREFIX + " Loading Config");
 		config();
+		logger.info(PREFIX + " Loading Banned player");
 		banned();
-        LoadCommands(); 
+        LoadCommands();
+        logger.info(PREFIX + " Loading Home Directory");
     	HDIR();	
+    	logger.info(PREFIX + " Loading Warp Directory");
     	WDIR();
-    	PDIR();
 	}
 
 	@Override
@@ -156,6 +161,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("warp").setExecutor(warpe);
 		getCommand("setwarp").setExecutor(warpe);
 		getCommand("delwarp").setExecutor(warpe);
+		getCommand("warplist").setExecutor(warpe);
 		getCommand("time").setExecutor(BCC2e);
 		getCommand("weather").setExecutor(BCC2e);
 		getCommand("kill").setExecutor(BCC2e);

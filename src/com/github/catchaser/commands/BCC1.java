@@ -205,7 +205,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
             }
 
             // Print all
-            player.sendMessage(ChatColor.GRAY + "Online Players: (" + plugin.getServer().getOnlinePlayers().length + ")");
+            player.sendMessage(ChatColor.GRAY + "Online Players: " + plugin.getServer().getOnlinePlayers().length);
             player.sendMessage(allPlayers);
 			}else if(!(player.hasPermission("BC.who.iso") || player.hasPermission("BC.who.*") || player.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");

@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -37,26 +36,26 @@ public class home extends JavaPlugin implements CommandExecutor {
 		Player p = (Player) sender;
 		ExtrasColour eC = new ExtrasColour();
 		if(commandLabel.equalsIgnoreCase("sethome")) {
-			if(p.hasPermission("BC.home.sethome") || p.hasPermission("BC.home.*")) {
+			if(p.hasPermission("BC.home.sethome") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*")) {
 			try
 			{
 				//Checking to see if there is already a home file for the player
-				boolean success = (new File("plugins/BaseCommands/homes/" + p.getName() + ".txt")).createNewFile();
+				boolean success = (new File("plugins/BaseCommands/homes/" + p.getName())).createNewFile();
 				if(success)
 				{
 					//writing location of player to the home file if it is the first time
-					Writer output = new FileWriter("plugins/BaseCommands/homes/" + p.getName() + ".txt", true);
+					Writer output = new FileWriter("plugins/BaseCommands/homes/" + p.getName(), true);
 	                output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
 					output.close();
 					p.sendMessage(ChatColor.GREEN +" First Home Created!");
 				}else {
 					//writing location of player to the home file if it is not the first time after deleting the previous home file
 
-                    File homefile = new File("plugins/BaseCommands/homes/" + p.getName() + ".txt");
+                    File homefile = new File("plugins/BaseCommands/homes/" + p.getName());
                     homefile.delete();
-                    File newhomefile = new File("plugins/BaseCommands/homes/" + p.getName() + ".txt");
+                    File newhomefile = new File("plugins/BaseCommands/homes/" + p.getName());
                     newhomefile.createNewFile();
-					Writer output = new FileWriter("plugins/BaseCommands/homes/" + p.getName() + ".txt", true);
+					Writer output = new FileWriter("plugins/BaseCommands/homes/" + p.getName(), true);
 					output.flush();
 	                output.write((new StringBuilder(String.valueOf((int)p.getLocation().getX()))).append(",").append((int)p.getLocation().getY()).append(",").append((int)p.getLocation().getZ()).append(",").append((int)p.getLocation().getYaw()).append(",").append((int)p.getLocation().getPitch()).append(",").append(p.getWorld().getName()).toString());
 					output.close();
@@ -67,19 +66,21 @@ public class home extends JavaPlugin implements CommandExecutor {
 			{
 				System.out.println(x.toString());
 			}
-		  }else if(!(p.hasPermission("BC.home.sethome") || p.hasPermission("BC.home.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
+		  }else if(!(p.hasPermission("BC.home.sethome") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*"))) {
+	 			String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 		  }
 		}
 		if(commandLabel.equalsIgnoreCase("home")) {
-			if(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*")) {
-				if(new File("plugins/BaseCommands/homes/" + p.getName() + ".txt").exists()) {
+			if(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*")) {
+				if(new File("plugins/BaseCommands/homes/" + p.getName()).exists()) {
 					try
 					{
 						//reading the players home file
-						BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/homes/" + p.getName() + ".txt"));
+						BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/homes/" + p.getName()));
 						String ln = br.readLine();
 						String coords[] = ln.split("\\,");
 						br.close();
@@ -95,13 +96,15 @@ public class home extends JavaPlugin implements CommandExecutor {
 					{
 						System.out.println(ex.toString());
 					}
-				}else if(!(new File("plugins/BaseCommands/homes/" + p.getName() + ".txt").exists())) {
+				}else if(!(new File("plugins/BaseCommands/homes/" + p.getName()).exists())) {
 					eC.sendColouredMessage(p, "No home has been set set a home with /sethome");
 				}
-		  }else if(!(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					p.sendMessage(per);
+		  }else if(!(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*"))) {
+	 			String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 		  }
 		}
 		return false;

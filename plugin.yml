@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 2.0.4
+version: 2.0.7
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
@@ -64,6 +64,8 @@ commands:
      description: freezes a player
     unfreeze:
      description: unfreezes a player
+    warplist:
+     description: lists all warps
 permissions:
   BC.*:
      decription: gives all BaseCommands Permissions
@@ -83,6 +85,7 @@ permissions:
             BC.warp.warp: true
             BC.warp.setwarp: true
             BC.warp.delwarp: true
+            BC.warp.list: true
   BC.warp.warp:
         description: Allows plays to warp
         default: op
@@ -92,6 +95,9 @@ permissions:
   BC.warp.delwarp:
         description: Allows players to delete warps
         default: op
+  BC.warp.list:
+         description: Allows the warp list command
+         default: op
   BC.home.*:
     description: Allows a player to use all home/spawn commands
     children:

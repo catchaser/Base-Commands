@@ -1,11 +1,10 @@
-package com.github.catchaser.listeners;
+package com.github.catchaser.spawn;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -27,10 +26,10 @@ public class BCListener implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player player = (Player) sender;
 		if(commandLabel.equalsIgnoreCase("spawn")){
-			if(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*")) {
+			if(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*") || player.hasPermission("BC.*")) {
 			try
 			{
-				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/spawn.txt"));
+				BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/spawn"));
 				String ln = br.readLine();
 				String coords[] = ln.split("\\,");
 				br.close();
@@ -52,17 +51,19 @@ public class BCListener implements CommandExecutor {
 				System.out.println(ex.toString());
 			}
 			return true;
-			}else if(!(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*"))){
-				List<String>  perm = plugin.getConfig().getStringList("PERM");
-				for(String per : perm)
-					player.sendMessage(per);
+			}else if(!(player.hasPermission("BC.home.spawn") || player.hasPermission("BC.home.*") || player.hasPermission("BC.*"))){
+	 			String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	player.sendMessage(message);
 			}
 			}
 		if(commandLabel.equalsIgnoreCase("setspawn")){
-			if(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*")){
+			if(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*") || player.hasPermission("BC.*")){
 			try
 			{
-                Writer output = new FileWriter("plugins/BaseCommands/spawn.txt", false);
+                Writer output = new FileWriter("plugins/BaseCommands/spawn", false);
                 output.flush();
                 output.write((new StringBuilder(String.valueOf((int)player.getLocation().getX()))).append(",").append((int)player.getLocation().getY()).append(",").append((int)player.getLocation().getZ()).append(",").append((int)player.getLocation().getYaw()).append(",").append((int)player.getLocation().getPitch()).append(",").append(player.getWorld().getName()).toString());
                 output.close();
@@ -75,10 +76,12 @@ public class BCListener implements CommandExecutor {
 				System.out.println(ex.toString());
 			}
 			
-		}else if(!(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*"))){
-			List<String>  perm = plugin.getConfig().getStringList("PERM");
-			for(String per : perm)
-				player.sendMessage(per);
+		}else if(!(player.hasPermission("BC.home.setspawn") || player.hasPermission("BC.home.*") || player.hasPermission("BC.*"))){
+ 			String message = plugin.getConfig().getString("PERM");
+	    	message = ChatColor.translateAlternateColorCodes('&', message);
+	    	message = ChatColor.translateAlternateColorCodes('$', message);
+	    	message = ChatColor.translateAlternateColorCodes('%', message);
+	    	player.sendMessage(message);
 		}
 			return true;
 		}

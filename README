@@ -1,5 +1,12 @@
-Base Commands for Bukkit (1.2.5 R4) Server v2.0.4
+Base Commands for Bukkit (1.2.5 R4) Server v2.0.7
 
+v2.0.7:
+added command:
+-warp list
+added permission:
+BC.warp.list
+added BC.* permission to the rest of the commands
+changed the file type of spawn, warp, home files
 v2.0.4:
 -added master paermission BC.*
 -upgraded to 1.2.5 R5 
