@@ -37,10 +37,10 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 		ExtrasColour eC = new ExtrasColour();
 		if(commandLabel.equalsIgnoreCase("heal")) {
 				if(args.length == 0) {
-					if(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*")) {
+					if(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*") || player.hasPermission("BC.*")) {
 					player.setHealth(20);
 					player.sendMessage(ChatColor.GOLD + "Healed");
-					}else if(!(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*"))) {
+					}else if(!(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*") || player.hasPermission("BC.*"))) {
 						String message = plugin.getConfig().getString("PERM");
 				    	message = ChatColor.translateAlternateColorCodes('&', message);
 				    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -48,16 +48,16 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				    	player.sendMessage(message);
 					}
 				}else if(args.length == 1) {
-					if(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*")) {
-						Player TargetP = getServer().getPlayer(args [1]);
-						if(TargetP != null) {
-						TargetP.setHealth(20);
-						TargetP.sendMessage(ChatColor.GOLD + "You were healed by: " + player.getDisplayName());
-						player.sendMessage(ChatColor.GOLD + "You healed: " + TargetP.getDisplayName());
-						}else if(TargetP == null) {
+					if(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*") || player.hasPermission("BC.*")) {
+						Player targetPlayer = player.getServer().getPlayer(args[0]);
+						if(targetPlayer != null) {
+						targetPlayer.setHealth(20);
+						targetPlayer.sendMessage(ChatColor.GOLD + "You were healed by: " + player.getDisplayName());
+						player.sendMessage(ChatColor.GOLD + "You healed: " + targetPlayer.getDisplayName());
+						}else if(targetPlayer == null) {
 							player.sendMessage(ChatColor.GREEN + "Player is not online");
 						}
-					}else if(!(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*"))) {
+					}else if(!(player.hasPermission("BC.heal.other") || player.hasPermission("BC.heal.*") || player.hasPermission("BC.*"))) {
 						String message = plugin.getConfig().getString("PERM");
 				    	message = ChatColor.translateAlternateColorCodes('&', message);
 				    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -69,15 +69,15 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}
 		}
 		if(commandLabel.equalsIgnoreCase("tp")) {
-			if(player.hasPermission("BC.tp.*")|| player.hasPermission("BC.tp.2p")) {
+			if(player.hasPermission("BC.tp.*")|| player.hasPermission("BC.tp.2p") || player.hasPermission("BC.*")) {
 				if(args.length == 0) {
-					eC.sendMultiColouredMessage(player, "You must select a player");
+					eC.sendColouredMessage(player, "You must select a player");
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
 					return true;
 				}else if(args.length == 1) {
 					Player targetPlayer = player.getServer().getPlayer(args[0]);
 					  if(targetPlayer == null){
-	                        eC.sendMultiColouredMessage(player, "Player is not online!");
+	                        eC.sendColouredMessage(player, "Player is not online!");
 	                    return true;
 	                    }else if(targetPlayer != null){
                     Location loc = targetPlayer.getLocation();
@@ -86,7 +86,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
                     return true;
 	                    }
 				}else if(args.length == 2) {
-					if(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*")) {
+					if(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*") || player.hasPermission("BC.*")) {
 					Player TP1 = player.getServer().getPlayer(args[0]);
 					Player TP2 = player.getServer().getPlayer(args[1]);
 					if(TP1 == null || TP2 == null) 
@@ -97,7 +97,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 					Location Loc = TP2.getLocation();
 					TP1.teleport(Loc);
 					TP1.sendMessage(ChatColor.BLUE + " You were teleported to:" + TP2.getName() + " by: " + player.getName());
-					}else if(!(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*"))) {
+					}else if(!(player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.tp.*") || player.hasPermission("BC.*"))) {
 						String message = plugin.getConfig().getString("PERM");
 				    	message = ChatColor.translateAlternateColorCodes('&', message);
 				    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -107,7 +107,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}else if(args.length >= 3) {
 					eC.sendColouredMessage(player, "Usage: /tp <player>");
 				}
-			}else if(!(player.hasPermission("BC.tp.*") || player.hasPermission("BC.tp.p2p"))) {
+			}else if(!(player.hasPermission("BC.tp.*") || player.hasPermission("BC.tp.p2p") || player.hasPermission("BC.*"))) {
 				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
 				for(String per : perm)
 					player.sendMessage(per);
@@ -115,7 +115,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("tphere")) {
-			if(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*")) {
+			if(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*") || player.hasPermission("BC.*")) {
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.RED + "You must select a player");
 				}else if(args.length == 1) {
@@ -135,7 +135,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}else if(args.length >= 3) {
 					player.sendMessage(ChatColor.GOLD + "Nope!");
 				}
-			}else if(!(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*"))) {
+			}else if(!(player.hasPermission("BC.tp.here") || player.hasPermission("BC.tp.*") || player.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -144,7 +144,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("fly")) {
-			if(player.hasPermission("BC.fight.fly") == true || player.hasPermission("BC.flight.*") == true) {
+			if(player.hasPermission("BC.fight.fly") || player.hasPermission("BC.flight.*") || player.hasPermission("BC.*")) {
 				if(args.length == 0) {
 					if(player.getAllowFlight() == true) {
 						player.sendMessage(ChatColor.GREEN + "Flying already Enabled");
@@ -155,7 +155,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}else if(!(args.length == 0)) {
 				player.sendMessage(ChatColor.RED + "Usage: /fly");
 				}
-			}else if(!(player.hasPermission("BC.fight.fly") || player.hasPermission("BC.flight.*"))) {
+			}else if(!(player.hasPermission("BC.fight.fly") || player.hasPermission("BC.flight.*") || player.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -166,7 +166,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 		}
 		if(commandLabel.equalsIgnoreCase("dfly")) {
 			//Command for Disabling Flying
-			if(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*")) {
+			if(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*") || player.hasPermission("BC.*")) {
 				if(args.length == 0) {
 					if(player.getAllowFlight()) { //checks if player is already allowed flight
 						player.setAllowFlight(false);
@@ -177,7 +177,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 				}else if(!(args.length == 0)) {
 					player.sendMessage(ChatColor.RED + "Usage: /dfly");
 				}
-		  }else if(!(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*"))) {
+		  }else if(!(player.hasPermission("BC.flight.dfly") || player.hasPermission("BC.flight.*") || player.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -194,7 +194,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 		}
 		if(commandLabel.equalsIgnoreCase("whoiso")) {
 			// Command for Checking who is online on the server
-			if(player.hasPermission("BC.who.iso")) {
+			if(player.hasPermission("BC.who.iso") || player.hasPermission("BC.who.*") || player.hasPermission("BC.*")) {
             String allPlayers = "";
             for(int i = 0; i < plugin.getServer().getOnlinePlayers().length; i++)
             {
@@ -207,7 +207,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
             // Print all
             player.sendMessage(ChatColor.GRAY + "Online Players: (" + plugin.getServer().getOnlinePlayers().length + ")");
             player.sendMessage(allPlayers);
-			}else if(!(player.hasPermission("BC.who.iso"))) {
+			}else if(!(player.hasPermission("BC.who.iso") || player.hasPermission("BC.who.*") || player.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);

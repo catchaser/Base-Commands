@@ -1,6 +1,10 @@
 Base Commands for Bukkit (1.2.5 R4) Server v2.0.1
 
-
+v2.0.4:
+-added master paermission BC.*
+-upgraded to 1.2.5 R5 
+-fixed a few bugs involving the
+heal command and the kill command
 v2.0.1:
 -fixed string in config PERM not showing
 v2.0:

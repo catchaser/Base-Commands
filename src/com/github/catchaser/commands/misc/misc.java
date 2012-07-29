@@ -22,7 +22,7 @@ public class misc implements CommandExecutor{
 		Player p = (Player) sender;
 		PluginDescriptionFile pdfFile = plugin.getDescription();
 		if(commandLabel.equalsIgnoreCase("nickname")) {
-			if(p.hasPermission("BC.name.nick")) {
+			if(p.hasPermission("BC.name.nick") || p.hasPermission("BC.*") || p.hasPermission("BC.name.*")) {
 				if(args.length == 0) {
 					p.sendMessage(ChatColor.GREEN + "You must select a player and a nick name");
 					p.sendMessage(ChatColor.BLUE + "Usage: /nickname <player> <nickname>");
@@ -42,7 +42,27 @@ public class misc implements CommandExecutor{
 					p.sendMessage("Usage: /nickname <player> <nickname>");
 					return true;
 				}
-			}else if(!p.hasPermission("BC.name.nick")) {
+			}else if(!p.hasPermission("BC.name.nick") || p.hasPermission("BC.*") || p.hasPermission("BC.name.*")) {
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
+			}
+		}
+		if(commandLabel.equalsIgnoreCase("unnick")) {
+			if(p.hasPermission("BC.name.unnick") || p.hasPermission("BC.name.*") || p.hasPermission("BC.*")) {
+				if(args.length  == 0 || args.length >=2) {
+					p.sendMessage(ChatColor.BLUE + "Usage: /unnick <player>");
+				}else if(args.length == 1) {
+					Player TP = plugin.getServer().getPlayer(args [0]);
+					TP.getName();
+					TP.setDisplayName(plugin.getServer().getPlayer(args [0]).getName());
+					TP.setPlayerListName(plugin.getServer().getPlayer(args [0]).getName());
+					p.sendMessage(ChatColor.GOLD + "Nick name removed from: " + ChatColor.GREEN + TP.getName());
+					TP.sendMessage(ChatColor.GOLD + "Nickname removed by: " + ChatColor.GREEN + p.getName());
+				}
+			}else if(!p.hasPermission("BC.name.nick") || p.hasPermission("BC.*")) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -55,7 +75,7 @@ public class misc implements CommandExecutor{
 			p.sendMessage(PREFIX + " Bukkit Version: " + p.getServer().getVersion());
 		}
 		if(commandLabel.equalsIgnoreCase("feed")) {
-			if(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*")) {
+			if(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*") || p.hasPermission("BC.*")) {
 				if(args.length  == 0) {
 					p.setFoodLevel(20);
 					p.sendMessage(ChatColor.GOLD + " Food level restored");
@@ -82,7 +102,11 @@ public class misc implements CommandExecutor{
 		    	p.sendMessage(message);
 			}
 		}
+		if(commandLabel.equalsIgnoreCase("about")) {
+			if(p.hasPermission("BC.about") || p.hasPermission("BC.*")) {
+				
+			}
+		}
 		return false;
 	}
-
 }

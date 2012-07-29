@@ -123,7 +123,7 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
 		if(commandLabel.equalsIgnoreCase("kill")) {
 			if(p.hasPermission("BC.heal.kill") || p.hasPermission("BC.heal.*")) {
 				// Do we have an arg?
-                if(args.length > 0)
+                if(args.length > 1)
                 {
                     // For each arg
                     for(int i = 0; i < args.length; i++)
@@ -140,9 +140,16 @@ public class BCC2 extends JavaPlugin implements CommandExecutor{
                             }
                         }
                     }
-                }
-                // Else, kill self
-                else{
+                }else if(args.length  == 1) {
+                	Player tp = (Player) p.getServer().getPlayer(args [0]);
+                	if(tp == null) {
+                		p.sendMessage(ChatColor.BLUE + "Player is offline!");
+                	}else if(tp != null) {
+                		tp.sendMessage(ChatColor.RED + "You were killed by: " + p.getName());
+                		tp.setHealth(0);
+                	}
+                
+                }else if (args.length  == 0){ // kill self
                 	p.sendMessage(ChatColor.GREEN + "Killing you!");
                     p.setHealth(0);
                 }

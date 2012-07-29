@@ -20,7 +20,7 @@ public class BCC3 implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
 		if(commandLabel.equalsIgnoreCase("msg")) {
-			if(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*")) { // checks if the players has the permissions
+			if(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*") || p.hasPermission("BC.*")) { // checks if the players has the permissions
 				if((args.length == 0) || args.length == 1) {
 					p.sendMessage(ChatColor.BLUE + "Usage: /msg <player> <msg>"); // checks if they used the command right
 				}else if(args.length >= 2 ) {
@@ -42,7 +42,7 @@ public class BCC3 implements CommandExecutor{
 			    
 				}
 				
-			}else if(!(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*"))) {
+			}else if(!(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*") || p.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -51,7 +51,7 @@ public class BCC3 implements CommandExecutor{
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("freeze")) {
-			if(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*")) {
+			if(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
 				if(args.length == 0 || args.length >= 2) {
 					p.sendMessage(ChatColor.BLUE + "Usage: /freeze <player>");
 				}else if(args.length == 1) {
@@ -68,7 +68,7 @@ public class BCC3 implements CommandExecutor{
 						}
 					}
 				}
-			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*"))) {
+			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
@@ -77,7 +77,7 @@ public class BCC3 implements CommandExecutor{
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("unfreeze")) {
-			if(p.hasPermission("BC.admin.unfreeze") || p.hasPermission("BC.admin.*")) {
+			if(p.hasPermission("BC.admin.unfreeze") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
 				if(args.length == 0 || args.length >= 2) {
 					p.sendMessage(ChatColor.BLUE + "Usage: /unfreeze <player>");
 				}else if(args.length == 1) {
@@ -94,7 +94,7 @@ public class BCC3 implements CommandExecutor{
 						}
 					}
 				}
-			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*"))) {
+			}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);

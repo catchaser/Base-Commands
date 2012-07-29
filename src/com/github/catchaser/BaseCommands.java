@@ -1,6 +1,10 @@
 package com.github.catchaser;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -20,11 +24,12 @@ import com.github.catchaser.commands.BCC3;
 import com.github.catchaser.commands.ginfo;
 import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.events.BanLogging;
-import com.github.catchaser.events.Loggingin_noban;
+import com.github.catchaser.events.joining;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BCListener;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
+import com.github.catchaser.listeners.namestore;
 import com.github.catchaser.warp.warp;
 
 import couk.Adamki11s.Extras.Extras.Extras;
@@ -44,6 +49,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private misc mis;
 	public static final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
+	public namestore nick;
 	public static Permission permission = null;
 	public final freezeListener fl = new freezeListener(this);
 	public boolean freeze = false;
@@ -51,44 +57,23 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	@SuppressWarnings("static-access")
 	@Override
 	public void onEnable() { // Enables the plugin
-		setupPermissions();
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
 		Extras ex = new Extras("BaseCommands"); 
-        if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
-			logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
-		}else{
-			 this.getConfig().options().copyDefaults(true);
-		    this.saveConfig(); //creates config.yml if it doesnt exist
-		    logger.info("[BaseCommands] Config Created");
-		}
-        try {
-        	if(new File("BC-Banned-Players.txt").exists()) { //checks if BC-Banned-Players.txt exsits
-            	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
-                this.bannedPlayers.load(); //loads BC-Banned-Players.txt
-                logger.info(PREFIX + " Loaded the BC-banned-players file");
-        	}else{
-			new File("BC-banned-players.txt").createNewFile(); //creates file if it doesnt exsit
-        	logger.info(PREFIX + " Loaded BC-banned-players file");
-        	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
-            this.bannedPlayers.load(); 
-        	}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
-        LoadCommands(); 
-        
-        
-        this.getServer().getPluginManager().registerEvents(new Loggingin_noban(this), this); // registers the MOTD on login event
+		setupPermissions();
+
+        this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on login event
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
-		this.getServer().getPluginManager().registerEvents(fl, this);
+		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
 		
+		config();
+		banned();
+        LoadCommands(); 
     	HDIR();	
     	WDIR();
     	PDIR();
 	}
-	
+
 	@Override
 	public void onDisable() { //Disables the plugin
 		PluginDescriptionFile pdfFile = this.getDescription();
@@ -145,88 +130,44 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	}	
 	
 	public void LoadCommands() { //loads all the commands for BaseCommands
+		BCC3e = new BCC3(this);
 		BCC1e = new BCC1(this);
+		ginfoe = new ginfo(this);
+		spawn = new BCListener(this);
+		homee = new home(this);
+		warpe = new warp(this);
+		BCC2e = new BCC2(this);
+		mis = new misc(this);
+		ban = new BanExecutor(this);
+		
     	getCommand("heal").setExecutor(BCC1e);
-    	
-        BCC1e = new BCC1(this);
     	getCommand("tp").setExecutor(BCC1e);
-    	
-    	BCC1e = new BCC1(this);
     	getCommand("rules").setExecutor(BCC1e);
-    	
-    	BCC1e = new BCC1(this);
     	getCommand("tphere").setExecutor(BCC1e);
-    	
-    	BCC1e = new BCC1(this);
     	getCommand("whoiso").setExecutor(BCC1e);
-    	
-    	ginfoe = new ginfo(this);
     	getCommand("ginfo").setExecutor(ginfoe);
-    	
-    	ginfoe = new ginfo(this);
     	getCommand("ginfo2").setExecutor(ginfoe);
-    	
-    	BCC1e = new BCC1(this);
     	getCommand("fly").setExecutor(BCC1e);
-    	
-    	BCC1e = new BCC1(this);
     	getCommand("dfly").setExecutor(BCC1e);
-    	
-    	spawn = new BCListener(this);
     	getCommand("spawn").setExecutor(spawn);
-    	
-    	spawn = new BCListener(this);
 		getCommand("setspawn").setExecutor(spawn);
-		
-		homee = new home(this);
 		getCommand("home").setExecutor(homee);
-		
-		homee = new home(this);
 		getCommand("sethome").setExecutor(homee);
-		
-		warpe = new warp(this);
 		getCommand("warp").setExecutor(warpe);
-
-		warpe = new warp(this);
 		getCommand("setwarp").setExecutor(warpe);
-    	
-		warpe = new warp(this);
 		getCommand("delwarp").setExecutor(warpe);
-		
-		BCC2e = new BCC2(this);
 		getCommand("time").setExecutor(BCC2e);
-		
-		BCC2e = new BCC2(this);
 		getCommand("weather").setExecutor(BCC2e);
-		
-		BCC2e = new BCC2(this);
 		getCommand("kill").setExecutor(BCC2e);
-		
-		BCC2e = new BCC2(this);
 		getCommand("kick").setExecutor(BCC2e);
-		
-		ban = new BanExecutor(this);
 		getCommand("ban").setExecutor(ban);
-		
-		ban = new BanExecutor(this);
 		getCommand("unban").setExecutor(ban);
-		
-		mis = new misc(this);
 		getCommand("nickname").setExecutor(mis);
-		
-		mis = new misc(this);
+		getCommand("unnick").setExecutor(mis);
 		getCommand("bcversion").setExecutor(mis);
-		
-		mis = new misc(this);
 		getCommand("feed").setExecutor(mis);
-		
-		BCC3e = new BCC3(this);
 		getCommand("msg").setExecutor(BCC3e);
-		
-		BCC3e = new BCC3(this);
 		getCommand("freeze").setExecutor(BCC3e);
-		
-		BCC3e = new BCC3(this);
 		getCommand("unfreeze").setExecutor(BCC3e);
 	}
 	
@@ -244,4 +185,31 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		}
 		return false;
 	}	
+	
+	public void config() {
+		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
+				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
+			}else{
+				 this.getConfig().options().copyDefaults(true);
+			    this.saveConfig(); //creates config.yml if it doesnt exist
+			    logger.info("[BaseCommands] Config Created");
+			}
+	        
+	}
+	public void banned() {
+		try {
+        	if(new File("BC-Banned-Players.txt").exists()) { //checks if BC-Banned-Players.txt exsits
+            	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
+                this.bannedPlayers.load(); //loads BC-Banned-Players.txt
+                logger.info(PREFIX + " Loaded the BC-banned-players file");
+        	}else{
+			new File("BC-banned-players.txt").createNewFile(); //creates file if it doesnt exsit
+        	logger.info(PREFIX + " Loaded BC-banned-players file");
+        	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
+            this.bannedPlayers.load(); 
+        	}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
