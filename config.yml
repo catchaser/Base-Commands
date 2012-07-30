@@ -1,16 +1,23 @@
 ##############################################################
-##                                                          ##
-##                                                          ##
-##                                                          ##
-##                                                          ##
-##                                                          ##
+##  Base Commands!                                          ##
+## Base Commands Author: Catchaser9620/catchaser            ##
+## Base Commands Tester: sh4nks                             ##
+## Base Commands is the property of Catchaser9620           ##
+## Base Commands should only be downloaded from:            ##
+##dev.bukkit.org                                            ##
 ##                                                          ##
 ##                                                          ##
 ##                                                          ##
 ##############################################################
-MOTD: Welcome to the Server
+
+
+##The messge for when players join the server (Color Support)
+MOTD: Welcome to the Server 1
+##The message for when a player tries to use a command with out the permission (Color Support)
 PERM: You do not have that permission!
+##Enables/Disables the password requirement when a player joins the server its disabled by default(No Color Support)
 passwd: false
+## Rules of the server (No Color Support)
 rules:
  - Have Fun
  - Play Nice

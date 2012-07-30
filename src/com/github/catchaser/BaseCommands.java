@@ -5,9 +5,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
@@ -65,16 +70,17 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public void onEnable() { // Enables the plugin
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
-		Extras ex = new Extras("BaseCommands"); 
+		Extras ex = new Extras("BaseCommands");
 		setupPermissions();
 
-        this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on login event
+        this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on join event
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
 		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
-		this.getServer().getPluginManager().registerEvents(ml, this);
+		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
 		
 		PDIR();
 		config();
+		checkConfig();
 		banned();
         LoadCommands();
     	HDIR();	
@@ -202,14 +208,26 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	}	
 	
 	public void config() {
+		PluginDescriptionFile pdfFile = this.getDescription();
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
 			}else{
-				 this.getConfig().options().copyDefaults(true);
-				 this.getConfig().options().copyHeader(true);
-			    this.saveConfig(); //creates config.yml if it doesnt exist
 			    logger.info("[BaseCommands] Config Created");
 			}
+		 if(new File("plugins/BaseCommands/" + pdfFile.getVersion()).exists()) {
+			 logger.info(PREFIX + " Config Up to date!");
+		 }else if(!(new File("plugins/BaseCommands/" + pdfFile.getVersion()).exists())) {
+			 logger.severe(PREFIX + " Config file ether outdated or corrupted!");
+			 logger.severe(PREFIX + " Replacing old one!");
+			 File configFile = new File("plugins/BaseCommands/config.yml");
+			 configFile.delete();
+			 File versionFile = new File("plugins/BaseCommands/" + pdfFile.getVersion());
+			 try {
+				versionFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		 }
 	        if(this.getConfig().getString("passwd").equals("true")) {
 	        	logger.info(PREFIX + " Password enabled!");
 	        	passwod = true;
@@ -246,4 +264,54 @@ public class BaseCommands extends JavaPlugin implements Listener{
 			
 		}
 	}
+	
+	public void checkConfig() {
+		  if(!checkFile("config.yml", this.getDataFolder())) {
+		    getLogger().warning("Error creating config!");
+		  }
+		}
+		public boolean checkFile(String filename, File directory) {
+		  if(!(new File(directory, filename)).exists()) {
+		    if(!extractFile(filename, directory)) {
+		      return false;
+		    }
+		  }
+		  return true;
+		}
+		public boolean extractFile(String filename, File destination) {
+		  File outputFile = new File(destination, filename);
+		  DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		  Date date = new Date();
+		  String theDate = dateFormat.format(date);
+		  File backup = new File(destination, theDate + filename);
+		  try {
+		    if(outputFile.exists()) {
+		      outputFile.renameTo(backup);
+		    }
+		    destination.mkdir();
+		    if(getClass().getResourceAsStream("/" + filename) == null) {
+		      if(backup.exists()) {
+		        backup.renameTo(outputFile);
+		      }
+		      System.out.println("File not found in jar: " + filename);
+		      return false;
+		    }
+		    outputFile.createNewFile();
+		    InputStream is = getClass().getResourceAsStream("/" + filename);
+		    FileOutputStream fos = new FileOutputStream(outputFile);
+		    byte[] buffer = new byte[1024];
+		    int bytesRead;
+		    while((bytesRead = is.read(buffer)) > 0) {
+		      fos.write(buffer, 0, bytesRead);
+		    }
+		    fos.flush();
+		    fos.close();
+		    is.close();
+		  }
+		  catch (IOException e) {
+		    e.printStackTrace();
+		    System.out.println("Error extracting file: " + filename);
+		  }
+		  return true;
+		}
 }

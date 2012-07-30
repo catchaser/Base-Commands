@@ -62,6 +62,8 @@ public class warp extends JavaPlugin implements CommandExecutor {
         		}else if(!(args.length == 1)) {
         			p.sendMessage(ChatColor.RED  + "Usage: /setwarp <warpname>");
         		}
+        		plugin.getPluginLoader().disablePlugin(plugin);
+        		plugin.getPluginLoader().enablePlugin(plugin);
           }else if(!(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*") || p.hasPermission("BC.*"))) {
   			String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
