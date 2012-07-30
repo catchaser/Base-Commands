@@ -38,7 +38,8 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 					player.sendMessage(ChatColor.GOLD + "Potion Effect: " + player.getActivePotionEffects());
 					player.sendMessage(ChatColor.GOLD + "Minutes Lived: " + extrasPlayer.getMinutesLived(player));
 				}else if(args.length == 1) {
-					Player TargetP = getServer().getPlayer(args [1]);
+					Player TargetP = player.getServer().getPlayer(args [1]);
+					if(TargetP != null) {
 					player.sendMessage(ChatColor.GOLD + "Name: " + TargetP.getDisplayName());
 					player.sendMessage(ChatColor.GOLD + "OP: True");
 					player.sendMessage(ChatColor.GOLD + "IP: " + TargetP.getAddress());
@@ -47,6 +48,9 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 					player.sendMessage(ChatColor.GOLD + "World: " + TargetP.getWorld().getName());
 					player.sendMessage(ChatColor.GOLD + "Potion Effect: " + TargetP.getActivePotionEffects());
 					player.sendMessage(ChatColor.GOLD + "Minutes Lived: " + extrasPlayer.getMinutesLived(TargetP));
+					}else if(TargetP == null) {
+						player.sendMessage(ChatColor.GREEN + "Player is not online!");
+					}
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.GREEN + "Please only do one player at a time!");
 				}

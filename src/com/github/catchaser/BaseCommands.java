@@ -23,8 +23,10 @@ import com.github.catchaser.commands.BCC2;
 import com.github.catchaser.commands.BCC3;
 import com.github.catchaser.commands.ginfo;
 import com.github.catchaser.commands.misc.misc;
+import com.github.catchaser.commands.passwd.passwd;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.joining;
+import com.github.catchaser.events.mutedListener;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
@@ -47,12 +49,16 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private home homee;
 	private warp warpe;
 	private misc mis;
+	private passwd pas;
 	public static final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
 	public namestore nick;
 	public static Permission permission = null;
 	public final freezeListener fl = new freezeListener(this);
+	public final mutedListener ml = new mutedListener(this);
 	public boolean freeze = false;
+	public boolean mute = false;
+	public boolean passwod = false;
 	
 	@SuppressWarnings("static-access")
 	@Override
@@ -65,18 +71,15 @@ public class BaseCommands extends JavaPlugin implements Listener{
         this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on login event
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
 		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
+		this.getServer().getPluginManager().registerEvents(ml, this);
 		
-		logger.info(PREFIX + " Loading BaseCommands Directory");
 		PDIR();
-		logger.info(PREFIX + " Loading Config");
 		config();
-		logger.info(PREFIX + " Loading Banned player");
 		banned();
         LoadCommands();
-        logger.info(PREFIX + " Loading Home Directory");
     	HDIR();	
-    	logger.info(PREFIX + " Loading Warp Directory");
     	WDIR();
+    	passwds();
 	}
 
 	@Override
@@ -114,14 +117,14 @@ public class BaseCommands extends JavaPlugin implements Listener{
 			logger.info("[BaseCommands] Successfully Loaded Plugin directory!");
 		try //spawn file
 		{
-			boolean success11 = (new File("plugins/BaseCommands/spawn.txt")).createNewFile();
+			boolean success11 = (new File("plugins/BaseCommands/spawn")).createNewFile();
 			if(success11)
 			{
 				logger.info(pdfFile.getName() + " Successfully created spawn file!");
-				Writer output = new FileWriter("plugins/BaseCommands/spawn.txt", true);
+				Writer output = new FileWriter("plugins/BaseCommands/spawn", true);
 				output.write("0,0,0,0,0,0");
 				output.close();
-				logger.info("[BaseCommands] Set spawn.txt to default spawn!");
+				logger.info("[BaseCommands] Set spawn to default spawn!");
 				logger.severe(PREFIX +"If this is the first time using this plugin please reload the server for the other directories to be Loaded");
 				logger.severe(PREFIX + "if this is not the first time then you can just ignore this message");
 			}else{
@@ -144,6 +147,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		BCC2e = new BCC2(this);
 		mis = new misc(this);
 		ban = new BanExecutor(this);
+		pas = new passwd(this);
 		
     	getCommand("heal").setExecutor(BCC1e);
     	getCommand("tp").setExecutor(BCC1e);
@@ -175,6 +179,11 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("msg").setExecutor(BCC3e);
 		getCommand("freeze").setExecutor(BCC3e);
 		getCommand("unfreeze").setExecutor(BCC3e);
+		getCommand("mute").setExecutor(BCC3e);
+		getCommand("unmute").setExecutor(BCC3e);
+		getCommand("passwd").setExecutor(pas);
+		getCommand("setpasswd").setExecutor(pas);
+		getCommand("resetpasswd").setExecutor(pas);
 	}
 	
 	public boolean setupPermissions(){ //loads the permissions using vualt
@@ -197,10 +206,17 @@ public class BaseCommands extends JavaPlugin implements Listener{
 				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
 			}else{
 				 this.getConfig().options().copyDefaults(true);
+				 this.getConfig().options().copyHeader(true);
 			    this.saveConfig(); //creates config.yml if it doesnt exist
 			    logger.info("[BaseCommands] Config Created");
 			}
-	        
+	        if(this.getConfig().getString("passwd").equals("true")) {
+	        	logger.info(PREFIX + " Password enabled!");
+	        	passwod = true;
+	        }else if(this.getConfig().getString("passwd").equals("false")) {
+	        	logger.info(PREFIX + " Password disabled!");
+	        	passwod = false;
+	        }
 	}
 	public void banned() {
 		try {
@@ -216,6 +232,18 @@ public class BaseCommands extends JavaPlugin implements Listener{
         	}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	public void passwds() {
+		if(this.passwod) {
+			boolean success2 = (new File("plugins/BaseCommands/passwds/")).mkdir();
+			if(success2) {//creates passwords folder if it doesn't exist
+			logger.info("[BaseCommands] Successfully created Password directory!");	
+			}else{//loads the Password folder if it exists
+				logger.info("[BaseCommands] Successfully loaded Password directory!");
+			}
+		}else{
+			
 		}
 	}
 }

@@ -1,6 +1,22 @@
+<<<<<<< HEAD
 Base Commands for Bukkit (1.2.5 R5) Server v2.0.7
+=======
+Base Commands for Bukkit (1.2.5 R5) Server v2.1.0
+>>>>>>> Base Commands for Bukkit Server V2.1.0
 
-v2.0.7:
+v2.1.0:
+added commands:
+-passwd
+-setpasswd
+-resetpasswd
+-mute
+-unmute
+added permissions:
+-BC.admin.passwd.reset
+-BC.admin.mute
+-BC.admin.unmute
+added Password at login feature (disabled by default)
+v2.0.7: (not released)
 added command:
 -warp list
 added permission:
@@ -8,7 +24,7 @@ BC.warp.list
 added BC.* permission to the rest of the commands
 changed the file type of spawn, warp, home files
 v2.0.4:
--added master paermission BC.*
+-added master permission BC.*
 -upgraded to 1.2.5 R5 
 -fixed a few bugs involving the
 heal command and the kill command

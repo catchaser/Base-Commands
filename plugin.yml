@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 2.0.7
+version: 2.1.0
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
@@ -66,6 +66,16 @@ commands:
      description: unfreezes a player
     warplist:
      description: lists all warps
+    mute:
+     description: Mutes the player
+    unmute:
+     description: Unmutes a player
+    passwd:
+     description: Logs the player into the server
+    setpasswd:
+     description: Sets a players password
+    resetpasswd:
+     description: resets a password
 permissions:
   BC.*:
      decription: gives all BaseCommands Permissions
@@ -192,6 +202,9 @@ permissions:
             BC.admin.unban: true
             BC.admin.freeze: true
             BC.admin.unfreeze: true
+            BC.admin.mute: true
+            BC.admin.unmute: true
+            BC.admin.passwd.reset: true
   BC.admin.kick:
          description: Allows the kick command
          default: op
@@ -207,6 +220,15 @@ permissions:
   BC.admin.unfreeze:
          description: unfreezes a player
          default: op
+  BC.admin.mute:
+          description: mutes a player
+          default: op
+  BC.admin.unmute:
+          description: unmutes a player
+          default: op
+  BC.admin.passwd.reset:
+          description: resets the players password
+          default: op
   BC.name.*:
     description: Allows all nickname commands
     children:

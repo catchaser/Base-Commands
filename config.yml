@@ -1,5 +1,16 @@
+##############################################################
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##                                                          ##
+##############################################################
 MOTD: Welcome to the Server
 PERM: You do not have that permission!
+passwd: false
 rules:
  - Have Fun
  - Play Nice
