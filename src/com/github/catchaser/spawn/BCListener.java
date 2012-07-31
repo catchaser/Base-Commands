@@ -17,7 +17,6 @@ import com.github.catchaser.BaseCommands;
 
 public class BCListener implements CommandExecutor {
 	private BaseCommands plugin;
-	public static final String PERM = ChatColor.RED + "You do not have that permission!";
 	
 	public BCListener(BaseCommands plugin){
 		this.plugin = plugin;

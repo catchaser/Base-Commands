@@ -1,6 +1,5 @@
 package com.github.catchaser.banning;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -24,7 +23,7 @@ public class BanExecutor implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
 		if(commandLabel.equalsIgnoreCase("ban")) {
-			if(p.hasPermission("BC.admin.ban") || p.hasPermission("BC.admin.*")) {
+			if(p.hasPermission("BC.admin.ban") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
 				if(args.length >= 2 || args.length == 0) {
 					sender.sendMessage(ChatColor.RED + "Usage: /ban <player>");
 					return true;
@@ -39,14 +38,16 @@ public class BanExecutor implements CommandExecutor{
 				p.sendMessage(ChatColor.RED + args[0] + " was banned");
 				return true;
 				}
-			}else if(!(p.hasPermission("BC.admin.ban") || p.hasPermission("BC.admin.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
+			}else if(!(p.hasPermission("BC.admin.ban") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("unban")) {
-			if(p.hasPermission("BC.admin.unban") || p.hasPermission("BC.admin.*")) {
+			if(p.hasPermission("BC.admin.unban") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
 				if(args.length >= 2 || args.length == 0) {
 					sender.sendMessage(ChatColor.RED + "Usage: /unban <player>");
 					return true;
@@ -58,10 +59,12 @@ public class BanExecutor implements CommandExecutor{
 				p.sendMessage(ChatColor.RED + args[0] + " was unbanned");
 				return true;
 			    }
-			}else if(!(p.hasPermission("BC.admin.unban") || sender.hasPermission("BC.admin.*"))) {
-				List<String>  perm = plugin.getConfig().getStringList("PERM"); //locates and reads the string
-				for(String per : perm)
-					p.sendMessage(per);
+			}else if(!(p.hasPermission("BC.admin.unban") || sender.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
+				String message = plugin.getConfig().getString("PERM");
+		    	message = ChatColor.translateAlternateColorCodes('&', message);
+		    	message = ChatColor.translateAlternateColorCodes('$', message);
+		    	message = ChatColor.translateAlternateColorCodes('%', message);
+		    	p.sendMessage(message);
 			}
 		}
 		return true;

@@ -94,17 +94,12 @@ public class misc implements CommandExecutor{
 					p.sendMessage(ChatColor.YELLOW + "Usage: /feed <player> < > = optional for this command");
 					return true;
 				}
-			}else if(!(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*"))) {
+			}else if(!(p.hasPermission("BC.heal.feed") || p.hasPermission("BC.heal.*") || p.hasPermission("BC.*"))) {
 				String message = plugin.getConfig().getString("PERM");
 		    	message = ChatColor.translateAlternateColorCodes('&', message);
 		    	message = ChatColor.translateAlternateColorCodes('$', message);
 		    	message = ChatColor.translateAlternateColorCodes('%', message);
 		    	p.sendMessage(message);
-			}
-		}
-		if(commandLabel.equalsIgnoreCase("about")) {
-			if(p.hasPermission("BC.about") || p.hasPermission("BC.*")) {
-				
 			}
 		}
 		return false;

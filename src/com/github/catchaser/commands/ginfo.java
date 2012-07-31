@@ -27,7 +27,7 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 		@SuppressWarnings("unused")
 		ExtrasColour extrasColour = new ExtrasColour();
 		if(commandLabel.equalsIgnoreCase("ginfo")) {
-			if(player.hasPermission("BC.ginfo.1") || player.hasPermission("BC.ginfo.*")) {
+			if(player.hasPermission("BC.ginfo.1") || player.hasPermission("BC.ginfo.*") || player.hasPermission("BC.*")) {
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.GOLD + "Name: " + player.getDisplayName());
 					player.sendMessage(ChatColor.GOLD + "OP: True");
@@ -54,7 +54,7 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.GREEN + "Please only do one player at a time!");
 				}
-			}else if(!(player.hasPermission("BC.ginfo.1") || player.hasPermission("BC.ginfo.*"))) {
+			}else if(!(player.hasPermission("BC.ginfo.1") || player.hasPermission("BC.ginfo.*") || player.hasPermission("BC.*"))) {
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.GOLD + "Name: " + player.getDisplayName());
 					player.sendMessage(ChatColor.GOLD + "OP: False");
@@ -70,7 +70,7 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 			}
 		}
 		if(commandLabel.equalsIgnoreCase("ginfo2")) {
-			if(player.hasPermission("BC.ginfo.2") || player.hasPermission("BC.ginfo.*")) {
+			if(player.hasPermission("BC.ginfo.2") || player.hasPermission("BC.ginfo.*") || player.hasPermission("BC.*")) {
 				if(args.length  == 0){
 					player.sendMessage(ChatColor.GOLD + "Hour's lived: " + extrasPlayer.getHoursLived(player));
 					player.sendMessage(ChatColor.GOLD + "player is under water: " + extrasPlayer.isUnderWater(player));
@@ -83,7 +83,7 @@ public class ginfo extends JavaPlugin implements CommandExecutor{
 				}else if(args.length >= 2) {
 					player.sendMessage(ChatColor.GREEN + "Please only do one player at a time!");
 				}
-			}else if(!(player.hasPermission("BC.ginfo.2") || player.hasPermission("BC.ginfo.*"))) {
+			}else if(!(player.hasPermission("BC.ginfo.2") || player.hasPermission("BC.ginfo.*") || player.hasPermission("BC.*"))) {
 				if(args.length == 0) {
 					player.sendMessage(ChatColor.GOLD + "Hour's lived: " + extrasPlayer.getHoursLived(player));
 					player.sendMessage(ChatColor.GOLD + "player is under water: " + extrasPlayer.isUnderWater(player));

@@ -1,10 +1,6 @@
 package com.github.catchaser;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,9 +35,6 @@ import com.github.catchaser.listeners.namestore;
 import com.github.catchaser.spawn.BCListener;
 import com.github.catchaser.warp.warp;
 
-import couk.Adamki11s.Extras.Extras.Extras;
-
-@SuppressWarnings("unused")
 public class BaseCommands extends JavaPlugin implements Listener{
 	public static Logger logger = Logger.getLogger("Minecraft");
 	public static BaseCommands plugin;
@@ -70,9 +63,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public void onEnable() { // Enables the plugin
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
-		Extras ex = new Extras("BaseCommands");
 		setupPermissions();
-
+		
         this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on join event
 		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
 		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
@@ -193,7 +185,6 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	}
 	
 	public boolean setupPermissions(){ //loads the permissions using vualt
-		PluginDescriptionFile pdfFile = this.getDescription();
 		if(new File("plugins/Vault.jar").exists()) {
 		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 		if(permissionProvider != null){
@@ -209,15 +200,25 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	
 	public void config() {
 		PluginDescriptionFile pdfFile = this.getDescription();
-		String ver = this.getConfig().getString("version#");
+		String ver = "0.1.9b";
+		String str = this.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
 			}else{
 			    logger.info("[BaseCommands] Config Created");
 			}
-		 if(pdfFile.getVersion().equals(ver)) {
-			 logger.info(PREFIX + " Config is up to date!");
-		 }else if(!(pdfFile.getVersion().equals(ver))) {
+		 if(str != null) {
+			 if(this.getConfig().getString("version#").equals(ver)) {
+				 logger.info(PREFIX + " Config is up to date!");
+			 }else if(!(pdfFile.getVersion().equals(ver))) {
+				 logger.severe(PREFIX + " Config Outdated/Corrupted!!");
+				 logger.warning(PREFIX + " THIS WILL RESET THE ENTIRE CONFIG!");
+				 logger.warning(PREFIX + " ANY MODIFICATIONS TO THE CONFIG WILL BE ERASED SO YOU WILL HAVE TO SET THEM AGAIN!");
+				 logger.info(PREFIX + " Replacing old/corrupted config!");
+				 File configFile = new File("plugins/BaseCommands/config.yml");
+				 configFile.delete();
+			 }
+		 }else if(str == null){
 			 logger.severe(PREFIX + " Config Outdated/Corrupted!!");
 			 logger.warning(PREFIX + " THIS WILL RESET THE ENTIRE CONFIG!");
 			 logger.warning(PREFIX + " ANY MODIFICATIONS TO THE CONFIG WILL BE ERASED SO YOU WILL HAVE TO SET THEM AGAIN!");
