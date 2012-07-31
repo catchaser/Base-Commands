@@ -12,12 +12,14 @@
 
 
 ##The messge for when players join the server (Color Support)
-MOTD: Welcome to the Server 1
+MOTD: Welcome to the Server 
 ##The message for when a player tries to use a command with out the permission (Color Support)
 PERM: You do not have that permission!
 ##Enables/Disables the password requirement when a player joins the server its disabled by default(No Color Support)
 passwd: false
 ## Rules of the server (No Color Support)
 rules:
- - Have Fun
- - Play Nice
+- Have Fun
+- Play Nice
+##DO NOT TOUCH THIS THIS IS FOR BASECOMMANDS CONFIG UPDATER!
+version#: 2.1.1 

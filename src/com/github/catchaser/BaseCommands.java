@@ -209,24 +209,21 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	
 	public void config() {
 		PluginDescriptionFile pdfFile = this.getDescription();
+		String ver = this.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
 			}else{
 			    logger.info("[BaseCommands] Config Created");
 			}
-		 if(new File("plugins/BaseCommands/" + pdfFile.getVersion()).exists()) {
-			 logger.info(PREFIX + " Config Up to date!");
-		 }else if(!(new File("plugins/BaseCommands/" + pdfFile.getVersion()).exists())) {
-			 logger.severe(PREFIX + " Config file ether outdated or corrupted!");
-			 logger.severe(PREFIX + " Replacing old one!");
+		 if(pdfFile.getVersion().equals(ver)) {
+			 logger.info(PREFIX + " Config is up to date!");
+		 }else if(!(pdfFile.getVersion().equals(ver))) {
+			 logger.severe(PREFIX + " Config Outdated/Corrupted!!");
+			 logger.warning(PREFIX + " THIS WILL RESET THE ENTIRE CONFIG!");
+			 logger.warning(PREFIX + " ANY MODIFICATIONS TO THE CONFIG WILL BE ERASED SO YOU WILL HAVE TO SET THEM AGAIN!");
+			 logger.info(PREFIX + " Replacing old/corrupted config!");
 			 File configFile = new File("plugins/BaseCommands/config.yml");
 			 configFile.delete();
-			 File versionFile = new File("plugins/BaseCommands/" + pdfFile.getVersion());
-			 try {
-				versionFile.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		 }
 	        if(this.getConfig().getString("passwd").equals("true")) {
 	        	logger.info(PREFIX + " Password enabled!");

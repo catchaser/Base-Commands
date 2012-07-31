@@ -1,7 +1,7 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
 dev-url: http://dev.bukkit.org/server-mods/base-commands/
-version: 2.1.0
+version: 2.1.1
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
