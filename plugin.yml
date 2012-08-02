@@ -1,7 +1,7 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
 dev-url: http://dev.bukkit.org/server-mods/base-commands/
-version: 2.1.2
+version: 2.2.0
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
@@ -15,8 +15,6 @@ commands:
       description: Teleports a player to your current location
     ginfo:
      description: Gathers info about the/a player
-    ginfo2:
-     description: Gathers the other part of the/a players info
     fly:
      description: Enables Flying
     dfly:
@@ -77,11 +75,14 @@ commands:
      description: Sets a players password
     resetpasswd:
      description: resets a password
+    setsignwarp:
+     description: Sets a warp for a sign
 permissions:
   BC.*:
      decription: gives all BaseCommands Permissions
      children:
              BC.admin.*: true
+             BC.ginfo: true
              BC.warp.*: true
              BC.who.*: true
              BC.home.*: true
@@ -90,6 +91,8 @@ permissions:
              BC.flight.*: true
              BC.env.*: true
              BC.name.*: true
+  BC.ginfo:
+    description: Displays info about the/a player
   BC.warp.*:
     description: Allows a player to use all the BC warp commands
     children:
@@ -97,6 +100,7 @@ permissions:
             BC.warp.setwarp: true
             BC.warp.delwarp: true
             BC.warp.list: true
+            BC.warp.set.sign: true
   BC.warp.warp:
         description: Allows plays to warp
         default: op
@@ -108,6 +112,9 @@ permissions:
         default: op
   BC.warp.list:
          description: Allows the warp list command
+         default: op
+  BC.warp.set.sign:
+         description: Allows the setting of a warp for a sign
          default: op
   BC.home.*:
     description: Allows a player to use all home/spawn commands

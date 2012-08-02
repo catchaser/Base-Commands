@@ -4,8 +4,8 @@
 ## Base Commands Tester: sh4nks                             ##
 ## Base Commands is the property of Catchaser9620           ##
 ## Base Commands should only be downloaded from:            ##
-##dev.bukkit.org                                            ##
-##                                                          ##
+## dev.bukkit.org                                           ##
+## Base Commands Server basecommands.tk                     ##
 ##                                                          ##
 ##                                                          ##
 ##############################################################
@@ -23,4 +23,9 @@ rules:
 - Play Nice
 ##DO NOT TOUCH THIS THIS IS FOR BASECOMMANDS CONFIG UPDATER!
 ##If Deleted please delete the config manually and reload the server!
-version#: 0.1.9b
+version#: 0.1.10g
+##Sign Features!
+##Sign warp feature disabled by default
+signwarp: false
+##Item sign (ITEMBANK)
+signitem: false

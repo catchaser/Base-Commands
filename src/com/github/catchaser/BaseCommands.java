@@ -19,20 +19,23 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.banning.BanExecutor;
-import com.github.catchaser.commands.BCC1;
-import com.github.catchaser.commands.BCC2;
-import com.github.catchaser.commands.BCC3;
-import com.github.catchaser.commands.ginfo;
 import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.commands.passwd.passwd;
+import com.github.catchaser.commands.player.BCC1;
+import com.github.catchaser.commands.player.BCC2;
+import com.github.catchaser.commands.player.BCC3;
+import com.github.catchaser.commands.player.ginfo;
 import com.github.catchaser.events.BanLogging;
+import com.github.catchaser.events.BlockBreak;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
+import com.github.catchaser.events.signw;
+import com.github.catchaser.events.signi;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
-import com.github.catchaser.listeners.namestore;
 import com.github.catchaser.spawn.BCListener;
+import com.github.catchaser.warp.signwarp;
 import com.github.catchaser.warp.warp;
 
 public class BaseCommands extends JavaPlugin implements Listener{
@@ -44,19 +47,26 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private BanExecutor ban;
 	private BCListener spawn;
 	private BCC2 BCC2e;
+	private signwarp swe;
 	private home homee;
 	private warp warpe;
 	private misc mis;
 	private passwd pas;
 	public static final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
-	public namestore nick;
 	public static Permission permission = null;
 	public final freezeListener fl = new freezeListener(this);
 	public final mutedListener ml = new mutedListener(this);
+	public final signw sw = new signw(this);
+	public final signi si = new signi(this);
+	public final BlockBreak bb = new BlockBreak(this);
 	public boolean freeze = false;
 	public boolean mute = false;
 	public boolean passwod = false;
+	public boolean signw = false;
+	public boolean signif = false;
+	public boolean blockbreaktf = true;
+
 	
 	@SuppressWarnings("static-access")
 	@Override
@@ -64,12 +74,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
 		setupPermissions();
-		
-        this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on join event
-		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
-		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
-		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
-		
+        RegisterEvents();
 		PDIR();
 		config();
 		checkConfig();
@@ -77,7 +82,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
         LoadCommands();
     	HDIR();	
     	WDIR();
-    	passwds();
+    	passwds(); 
+    	swarps();
 	}
 
 	@Override
@@ -104,6 +110,17 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		}else{//loads the warp folder if it exists
 			logger.info("[BaseCommands] Successfully loaded warps directory!");
 		}
+	}
+	
+	public void RegisterEvents() {
+		this.getServer().getPluginManager().registerEvents(new joining(this), this); // registers the MOTD on join event
+		this.getServer().getPluginManager().registerEvents(new BanLogging(this), this); // registers the banned player on login event
+		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
+		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
+		this.getServer().getPluginManager().registerEvents(sw, this); //registers the warp sign event
+		this.getServer().getPluginManager().registerEvents(si, this);//registers the item sign event
+		this.getServer().getPluginManager().registerEvents(bb, this); //registers the Block break event
+		
 	}
 	
 	public void PDIR() {
@@ -146,6 +163,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		mis = new misc(this);
 		ban = new BanExecutor(this);
 		pas = new passwd(this);
+		swe = new signwarp(this);
 		
     	getCommand("heal").setExecutor(BCC1e);
     	getCommand("tp").setExecutor(BCC1e);
@@ -153,7 +171,6 @@ public class BaseCommands extends JavaPlugin implements Listener{
     	getCommand("tphere").setExecutor(BCC1e);
     	getCommand("whoiso").setExecutor(BCC1e);
     	getCommand("ginfo").setExecutor(ginfoe);
-    	getCommand("ginfo2").setExecutor(ginfoe);
     	getCommand("fly").setExecutor(BCC1e);
     	getCommand("dfly").setExecutor(BCC1e);
     	getCommand("spawn").setExecutor(spawn);
@@ -182,6 +199,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("passwd").setExecutor(pas);
 		getCommand("setpasswd").setExecutor(pas);
 		getCommand("resetpasswd").setExecutor(pas);
+		getCommand("setsignwarp").setExecutor(swe);
 	}
 	
 	public boolean setupPermissions(){ //loads the permissions using vualt
@@ -198,9 +216,52 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		return false;
 	}	
 	
+	
+	public void banned() {
+		try {
+        	if(new File("BC-Banned-Players.txt").exists()) { //checks if BC-Banned-Players.txt exsits
+            	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
+                this.bannedPlayers.load(); //loads BC-Banned-Players.txt
+                logger.info(PREFIX + " Loaded the BC-banned-players file");
+        	}else{
+			new File("BC-banned-players.txt").createNewFile(); //creates file if it doesnt exsit
+        	logger.info(PREFIX + " Loaded BC-banned-players file");
+        	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
+            this.bannedPlayers.load(); 
+        	}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void passwds() {
+		if(this.passwod) {
+			boolean success2 = (new File("plugins/BaseCommands/passwds/")).mkdir();
+			if(success2) {//creates passwords folder if it doesn't exist
+			logger.info("[BaseCommands] Successfully created Password directory!");	
+			}else{//loads the Password folder if it exists
+				logger.info("[BaseCommands] Successfully loaded Password directory!");
+			}
+		}else{
+			
+		}
+	}
+	
+	public void swarps() {
+		if(this.signw) {
+			boolean success2 = (new File("plugins/BaseCommands/signwarps/")).mkdir();
+			if(success2) {//creates passwords folder if it doesn't exist
+			logger.info("[BaseCommands] Successfully created SignWarps directory!");	
+			}else{//loads the Password folder if it exists
+				logger.info("[BaseCommands] Successfully loaded SignWarps directory!");
+			}
+		}else if(!(this.signw)) {
+			
+		}
+	}
+	
 	public void config() {
 		PluginDescriptionFile pdfFile = this.getDescription();
-		String ver = "0.1.9b";
+		String ver = "0.1.10g";
 		String str = this.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
@@ -233,34 +294,20 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	        	logger.info(PREFIX + " Password disabled!");
 	        	passwod = false;
 	        }
-	}
-	public void banned() {
-		try {
-        	if(new File("BC-Banned-Players.txt").exists()) { //checks if BC-Banned-Players.txt exsits
-            	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
-                this.bannedPlayers.load(); //loads BC-Banned-Players.txt
-                logger.info(PREFIX + " Loaded the BC-banned-players file");
-        	}else{
-			new File("BC-banned-players.txt").createNewFile(); //creates file if it doesnt exsit
-        	logger.info(PREFIX + " Loaded BC-banned-players file");
-        	this.bannedPlayers = new BanStore(new File("BC-banned-players.txt"));
-            this.bannedPlayers.load(); 
-        	}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	public void passwds() {
-		if(this.passwod) {
-			boolean success2 = (new File("plugins/BaseCommands/passwds/")).mkdir();
-			if(success2) {//creates passwords folder if it doesn't exist
-			logger.info("[BaseCommands] Successfully created Password directory!");	
-			}else{//loads the Password folder if it exists
-				logger.info("[BaseCommands] Successfully loaded Password directory!");
-			}
-		}else{
-			
-		}
+	        if(this.getConfig().getString("signwarp").equals("true")) {
+	        	logger.info(PREFIX + " SignWarp enabled!");
+	        	signw = true;
+	        }else if(this.getConfig().getString("signwarp").equals("false")) {
+	        	logger.info(PREFIX + " SignWarp disabled");
+	        	signw = false;
+	        }
+	        if(this.getConfig().getString("signitem").equals("true")) {
+	        	logger.info(PREFIX + " SignItem enabled!");
+	        	signif = true;	
+	        }else if(this.getConfig().getString("signitem").equals("false")) {
+	        	logger.info(PREFIX + " SignItem disabled");
+	        	signif = false;
+	        }
 	}
 	
 	public void checkConfig() {
@@ -312,4 +359,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		  }
 		  return true;
 		}
+		
+	
+	
 }

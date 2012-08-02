@@ -19,7 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.BaseCommands;
 
-import couk.Adamki11s.Extras.Colour.ExtrasColour;
 
 public class home extends JavaPlugin implements CommandExecutor {
 	public static final Logger logger = Logger.getLogger("Minecraft");
@@ -34,7 +33,6 @@ public class home extends JavaPlugin implements CommandExecutor {
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
-		ExtrasColour eC = new ExtrasColour();
 		if(commandLabel.equalsIgnoreCase("sethome")) {
 			if(p.hasPermission("BC.home.sethome") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*")) {
 			try
@@ -97,7 +95,7 @@ public class home extends JavaPlugin implements CommandExecutor {
 						System.out.println(ex.toString());
 					}
 				}else if(!(new File("plugins/BaseCommands/homes/" + p.getName()).exists())) {
-					eC.sendColouredMessage(p, "No home has been set set a home with /sethome");
+					p.sendMessage(ChatColor.DARK_AQUA + "No home has been set set a home with /sethome");
 				}
 		  }else if(!(p.hasPermission("BC.home.home") || p.hasPermission("BC.home.*") || p.hasPermission("BC.*"))) {
 	 			String message = plugin.getConfig().getString("PERM");

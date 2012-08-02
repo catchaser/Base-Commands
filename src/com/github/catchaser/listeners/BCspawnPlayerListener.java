@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,8 +35,6 @@ public class BCspawnPlayerListener implements Listener {
 			{
 				Location loc = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
 				event.getPlayer().teleport(loc);
-				event.getPlayer().sendMessage(ChatColor.GOLD + "Welcome to the Spawn!");
-				BaseCommands.logger.info("[BaseCommands] " + event.getPlayer() + " has been teleported to the spawn!");
 			}
 		}
 		catch(IOException ex)
@@ -54,8 +51,10 @@ public class BCspawnPlayerListener implements Listener {
 	            String ln = br.readLine();
 	            String coords[] = ln.split("\\,");
 	            br.close();
-	            if(Integer.parseInt(coords[0]) != 0)
-	                event.setRespawnLocation(new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4])));
+	            if(Integer.parseInt(coords[0]) != 0) {
+					Location loc = new Location(plugin.getServer().getWorld(coords[5]), Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]), Integer.parseInt(coords[4]));
+					event.getPlayer().teleport(loc);
+	            }
 	        }
 	        catch(IOException x)
 	        {

@@ -14,12 +14,9 @@ import org.bukkit.entity.Player;
 
 import com.github.catchaser.BaseCommands;
 
-import couk.Adamki11s.Extras.Cryptography.ExtrasCryptography;
-
 public class passwd implements CommandExecutor{
 	
 	public BaseCommands plugin;
-	ExtrasCryptography extrasCrypt = new ExtrasCryptography();
 	public String pass;
 	
 	public passwd(BaseCommands plugin) {
@@ -42,6 +39,7 @@ public class passwd implements CommandExecutor{
 								if(pa.equals(str)) {
 									plugin.freeze = false;
 									plugin.mute = false;
+									plugin.blockbreaktf = false;
 									p.sendMessage(ChatColor.GOLD + "Access Granted!");
 								}else if(!(pa.equals(str))) {
 									p.sendMessage(ChatColor.RED + "ERROR WRONG PASSWORD!");
@@ -65,7 +63,7 @@ public class passwd implements CommandExecutor{
 					pass = args[0];
 					if(new File("plugins/BaseCommands/passwds/" + p.getName()).exists()) {
 						p.sendMessage(ChatColor.BLUE + "You already have a password!");
-						p.sendMessage(ChatColor.BLUE + "You can reset your password by typing /passreset");
+						p.sendMessage(ChatColor.BLUE + "You can reset your password by typing /resetpasswd");
 					}else if(!(new File("plugins/BaseCommands/passwds/" + p.getName()).exists())) {
 						try {
 							new File("plugins/BaseCommands/passwds/" + p.getName()).createNewFile();

@@ -12,23 +12,24 @@ import com.github.catchaser.BaseCommands;
 
 public class joining implements Listener{
 	
-	private BaseCommands plugin;
-	
-	public joining(BaseCommands plugin) {
-		this.plugin = plugin;
+
+	private BaseCommands home;
+
+	public joining(BaseCommands home) {
+		this.home = home;
 	}
-	
 	
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void playerJoin(PlayerJoinEvent event) {
-    	String message = plugin.getConfig().getString("MOTD");
+    	String message = home.getConfig().getString("MOTD");
     	message = ChatColor.translateAlternateColorCodes('&', message);
     	message = ChatColor.translateAlternateColorCodes('$', message);
     	message = ChatColor.translateAlternateColorCodes('%', message);
     	event.getPlayer().sendMessage(message);
-    	if(plugin.passwod) {
-    		plugin.freeze = true;
-    		plugin.mute = true;
+    	if(home.passwod) {
+    		home.blockbreaktf = true;
+    		home.freeze = true;
+    		home.mute = true;
     		event.getPlayer().sendMessage(ChatColor.GOLD + "This server has password enabled!");
     		if(new File("plugins/BaseCommands/passwds/" + event.getPlayer().getName()).exists()) {
     			event.getPlayer().sendMessage(ChatColor.GOLD + "Please enter your password with /passwd <password>");

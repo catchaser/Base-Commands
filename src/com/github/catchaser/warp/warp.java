@@ -18,8 +18,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.BaseCommands;
-
-import couk.Adamki11s.Extras.Colour.ExtrasColour;
  
 public class warp extends JavaPlugin implements CommandExecutor {
     public static final Logger logger = Logger.getLogger("Minecraft");
@@ -36,7 +34,6 @@ public class warp extends JavaPlugin implements CommandExecutor {
  
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         Player p = (Player) sender;
-        ExtrasColour eC = new ExtrasColour();
         if(commandLabel.equalsIgnoreCase("setwarp")) {
         	if(p.hasPermission("BC.warp.set") || p.hasPermission("BC.warp.*") || p.hasPermission("BC.*")) {
         		if(args.length  == 1) {
@@ -116,7 +113,7 @@ public class warp extends JavaPlugin implements CommandExecutor {
             			warpFile.delete();
             			p.sendMessage(ChatColor.BLUE + "warp: " + args [0] + " has beed deleted");
         			}else if(!(new File("plugins/BaseCommands/warps/" + args[0]).exists())) {
-        				eC.sendMultiColouredMessage(p, "Warp does not exist!");
+        				p.sendMessage(ChatColor.GREEN + "Warp does not exist!");
         			}
         		}else if(!(p.hasPermission("BC.warp.del") || p.hasPermission("BC.warp.*") || p.hasPermission("BC.*"))) {
         			String message = plugin.getConfig().getString("PERM");
