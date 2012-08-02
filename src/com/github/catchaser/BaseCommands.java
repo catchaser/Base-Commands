@@ -19,18 +19,17 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.banning.BanExecutor;
-import com.github.catchaser.commands.misc.misc;
-import com.github.catchaser.commands.passwd.passwd;
 import com.github.catchaser.commands.player.BCC1;
 import com.github.catchaser.commands.player.BCC2;
 import com.github.catchaser.commands.player.BCC3;
 import com.github.catchaser.commands.player.ginfo;
+import com.github.catchaser.commands.player.misc.misc;
+import com.github.catchaser.commands.player.passwd.passwd;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.BlockBreak;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
 import com.github.catchaser.events.signw;
-import com.github.catchaser.events.signi;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
@@ -58,14 +57,13 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public final freezeListener fl = new freezeListener(this);
 	public final mutedListener ml = new mutedListener(this);
 	public final signw sw = new signw(this);
-	public final signi si = new signi(this);
 	public final BlockBreak bb = new BlockBreak(this);
 	public boolean freeze = false;
 	public boolean mute = false;
 	public boolean passwod = false;
 	public boolean signw = false;
 	public boolean signif = false;
-	public boolean blockbreaktf = true;
+	public boolean blockbreaktf = false;
 
 	
 	@SuppressWarnings("static-access")
@@ -118,7 +116,6 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		this.getServer().getPluginManager().registerEvents(fl, this); //registers the freeze event
 		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
 		this.getServer().getPluginManager().registerEvents(sw, this); //registers the warp sign event
-		this.getServer().getPluginManager().registerEvents(si, this);//registers the item sign event
 		this.getServer().getPluginManager().registerEvents(bb, this); //registers the Block break event
 		
 	}
@@ -301,13 +298,6 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	        	logger.info(PREFIX + " SignWarp disabled");
 	        	signw = false;
 	        }
-	        if(this.getConfig().getString("signitem").equals("true")) {
-	        	logger.info(PREFIX + " SignItem enabled!");
-	        	signif = true;	
-	        }else if(this.getConfig().getString("signitem").equals("false")) {
-	        	logger.info(PREFIX + " SignItem disabled");
-	        	signif = false;
-	        }
 	}
 	
 	public void checkConfig() {
@@ -359,7 +349,4 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		  }
 		  return true;
 		}
-		
-	
-	
 }

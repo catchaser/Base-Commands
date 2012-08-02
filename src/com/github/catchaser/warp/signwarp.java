@@ -58,6 +58,27 @@ public class signwarp implements CommandExecutor{
 		    	p.sendMessage(message);
           }
 		}
+		 if(commandLabel.equalsIgnoreCase("delsignwarp")) {
+	        	if(args.length == 1) {
+	        		if(p.hasPermission("BC.warp.del.sign") || p.hasPermission("BC.warp.*") || p.hasPermission("BC.*")) {
+	        			if(new File("plugins/BaseCommands/signwarps/" + args[0]).exists()) {
+	        				File warpFile = new File("plugins/BaseCommands/signwarps/" + args [0]);
+	            			warpFile.delete();
+	            			p.sendMessage(ChatColor.BLUE + "warp: " + args [0] + " has beed deleted");
+	        			}else if(!(new File("plugins/BaseCommands/signwarps/" + args[0]).exists())) {
+	        				p.sendMessage(ChatColor.GREEN + "Warp does not exist!");
+	        			}
+	        		}else if(!(p.hasPermission("BC.warp.del") || p.hasPermission("BC.warp.*") || p.hasPermission("BC.*"))) {
+	        			String message = plugin.getConfig().getString("PERM");
+				    	message = ChatColor.translateAlternateColorCodes('&', message);
+				    	message = ChatColor.translateAlternateColorCodes('$', message);
+				    	message = ChatColor.translateAlternateColorCodes('%', message);
+				    	p.sendMessage(message);
+	        		}
+	        	}else if(!(args.length == 1)) {
+	        		p.sendMessage(ChatColor.YELLOW + "Only delete one warp at a time!");
+	        	}
+	        }
 		return false;
 	}
 

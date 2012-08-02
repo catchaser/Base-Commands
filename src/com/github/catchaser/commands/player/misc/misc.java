@@ -1,4 +1,4 @@
-package com.github.catchaser.commands.misc;
+package com.github.catchaser.commands.player.misc;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -34,7 +34,6 @@ public class misc implements CommandExecutor{
 				}else if(args.length == 2) {
 					Player TP = p.getServer().getPlayer(args[0]);
 					TP.setDisplayName(args[1]);
-					TP.setPlayerListName(args[1]);
 					TP.sendMessage(ChatColor.GOLD + p.getName() + " has set your nickname to: " + TP.getDisplayName());
 					p.sendMessage(ChatColor.GOLD + "You have set: " + TP.getName() + "'s nickname to: " + TP.getDisplayName());
 					return true;
@@ -58,7 +57,6 @@ public class misc implements CommandExecutor{
 					Player TP = plugin.getServer().getPlayer(args [0]);
 					TP.getName();
 					TP.setDisplayName(plugin.getServer().getPlayer(args [0]).getName());
-					TP.setPlayerListName(plugin.getServer().getPlayer(args [0]).getName());
 					p.sendMessage(ChatColor.GOLD + "Nick name removed from: " + ChatColor.GREEN + TP.getName());
 					TP.sendMessage(ChatColor.GOLD + "Nickname removed by: " + ChatColor.GREEN + p.getName());
 				}

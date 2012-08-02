@@ -1,4 +1,4 @@
-package com.github.catchaser.commands.player;
+package com.github.catchaser.commands.cmd;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,9 +29,7 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
  
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Player player = null;
-		if (sender instanceof Player) {
-			player = (Player) sender;
+		Player player = (Player) sender;
 		if(commandLabel.equalsIgnoreCase("heal")) {
 				if(args.length == 0) {
 					if(player.hasPermission("BC.heal.self") || player.hasPermission("BC.heal.*") || player.hasPermission("BC.*")) {
@@ -211,7 +209,6 @@ public class BCC1 extends JavaPlugin implements CommandExecutor {
 		    	message = ChatColor.translateAlternateColorCodes('%', message);
 		    	player.sendMessage(message);
 			}
-		}
 		}
 		return false;
 	}

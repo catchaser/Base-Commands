@@ -1,4 +1,4 @@
-package com.github.catchaser.commands.passwd;
+package com.github.catchaser.commands.player.passwd;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -71,6 +71,7 @@ public class passwd implements CommandExecutor{
 							w.write(pass);
 							w.close();
 							p.sendMessage(ChatColor.GREEN + "Password Set!");
+							p.sendMessage(ChatColor.GOLD + "If just set your passwd for the first time you still need to do /passwd <password> ");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

@@ -17,7 +17,7 @@ public class BlockBreak implements Listener{
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		if(plugin.blockbreaktf) {
-			
+			e.getPlayer().sendMessage("Enter your password!");
 			e.setCancelled(true);
 		}else if(!(plugin.blockbreaktf)){
 			

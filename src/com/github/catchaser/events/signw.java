@@ -67,6 +67,9 @@ public class signw implements Listener{
 					event.getBlock().breakNaturally();
 					p.sendMessage(ChatColor.RED  + "NO WARP SELECTED!");
 				}
+			}else if(!(event.getLine(1).equals("ITEMBANK"))) {
+				event.getBlock().breakNaturally();
+				p.sendMessage(ChatColor.DARK_RED + "Invalid Sign");
 			}
 		}
 	}
@@ -98,9 +101,9 @@ public class signw implements Listener{
 	            				catch(IOException ex)
 	            				{
 	            					sign.setLine(0, ChatColor.DARK_RED + "!ERROR!");
-	            					sign.setLine(1, ChatColor.DARK_RED + "!ERROR!");
-	            					sign.setLine(2, ChatColor.DARK_RED + "!ERROR!");
-	            					sign.setLine(3, ChatColor.DARK_RED + "!ERROR!");
+	            					sign.setLine(1, ChatColor.DARK_RED + "");
+	            					sign.setLine(2, ChatColor.DARK_RED + "");
+	            					sign.setLine(3, ChatColor.DARK_RED + "");
 	            					e.getPlayer().sendMessage(ChatColor.RED + "Warp no longer exsists!");
 	            				}
 	            			}else if(sign.getLine(3).equals(ChatColor.GOLD + "Sample")) {
