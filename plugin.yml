@@ -1,7 +1,7 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
 dev-url: http://dev.bukkit.org/server-mods/base-commands/
-version: 2.2.0
+version: 2.2.2
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
@@ -77,6 +77,8 @@ commands:
      description: resets a password
     setsignwarp:
      description: Sets a warp for a sign
+    delsignwarp:
+     description: Deletes a sign warp
 permissions:
   BC.*:
      decription: gives all BaseCommands Permissions
@@ -101,6 +103,7 @@ permissions:
             BC.warp.delwarp: true
             BC.warp.list: true
             BC.warp.set.sign: true
+            BC.warp.del.sign: true
   BC.warp.warp:
         description: Allows plays to warp
         default: op
@@ -115,6 +118,9 @@ permissions:
          default: op
   BC.warp.set.sign:
          description: Allows the setting of a warp for a sign
+         default: op
+  BC.warp.del.sign:
+         description: Allows the deleteing of a sign warp
          default: op
   BC.home.*:
     description: Allows a player to use all home/spawn commands

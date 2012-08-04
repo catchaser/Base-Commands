@@ -1,14 +1,9 @@
 package com.github.catchaser;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Writer;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
@@ -19,17 +14,19 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.catchaser.banning.BanExecutor;
-import com.github.catchaser.commands.player.BCC1;
-import com.github.catchaser.commands.player.BCC2;
-import com.github.catchaser.commands.player.BCC3;
-import com.github.catchaser.commands.player.ginfo;
-import com.github.catchaser.commands.player.misc.misc;
-import com.github.catchaser.commands.player.passwd.passwd;
+import com.github.catchaser.commands.BCC1;
+import com.github.catchaser.commands.BCC2;
+import com.github.catchaser.commands.BCC3;
+import com.github.catchaser.commands.ginfo;
+import com.github.catchaser.commands.misc.misc;
+import com.github.catchaser.commands.passwd.passwd;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.BlockBreak;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
 import com.github.catchaser.events.signw;
+import com.github.catchaser.files.MOTD;
+import com.github.catchaser.files.config;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.listeners.freezeListener;
@@ -38,7 +35,7 @@ import com.github.catchaser.warp.signwarp;
 import com.github.catchaser.warp.warp;
 
 public class BaseCommands extends JavaPlugin implements Listener{
-	public static Logger logger = Logger.getLogger("Minecraft");
+	public Logger logger = Logger.getLogger("Minecraft");
 	public static BaseCommands plugin;
 	private BCC1 BCC1e;
 	private BCC3 BCC3e;
@@ -51,12 +48,14 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	private warp warpe;
 	private misc mis;
 	private passwd pas;
-	public static final String PREFIX ="[BaseCommands]";
+	public final String PREFIX ="[BaseCommands]";
 	public BanStore bannedPlayers;
 	public static Permission permission = null;
 	public final freezeListener fl = new freezeListener(this);
 	public final mutedListener ml = new mutedListener(this);
 	public final signw sw = new signw(this);
+	public final config cfg = new config(this);
+	public final MOTD mtd = new MOTD(this);
 	public final BlockBreak bb = new BlockBreak(this);
 	public boolean freeze = false;
 	public boolean mute = false;
@@ -64,9 +63,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public boolean signw = false;
 	public boolean signif = false;
 	public boolean blockbreaktf = false;
-
 	
-	@SuppressWarnings("static-access")
 	@Override
 	public void onEnable() { // Enables the plugin
 		PluginDescriptionFile pdfFile = this.getDescription();
@@ -74,8 +71,9 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		setupPermissions();
         RegisterEvents();
 		PDIR();
-		config();
-		checkConfig();
+		cfg.configl();
+		cfg.checkConfig();
+		mtd.checkMOTD();
 		banned();
         LoadCommands();
     	HDIR();	
@@ -89,7 +87,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		PluginDescriptionFile pdfFile = this.getDescription();
 		this.bannedPlayers.save();
 		logger.info("[BaseCommands] Saving Banned players"); //saves the BC-Banned-Player.txt file
-		BaseCommands.logger.info(pdfFile.getName() + " has been Disabled!");
+		logger.info(pdfFile.getName() + " has been Disabled!");
 	}
 	
 	public void HDIR() { //Home folder
@@ -117,9 +115,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
 		this.getServer().getPluginManager().registerEvents(sw, this); //registers the warp sign event
 		this.getServer().getPluginManager().registerEvents(bb, this); //registers the Block break event
-		
 	}
-	
+
 	public void PDIR() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		boolean success1 = (new File("plugins/BaseCommands/")).mkdir();
@@ -197,6 +194,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("setpasswd").setExecutor(pas);
 		getCommand("resetpasswd").setExecutor(pas);
 		getCommand("setsignwarp").setExecutor(swe);
+		getCommand("delsignwarp").setExecutor(swe);
 	}
 	
 	public boolean setupPermissions(){ //loads the permissions using vualt
@@ -254,99 +252,5 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		}else if(!(this.signw)) {
 			
 		}
-	}
-	
-	public void config() {
-		PluginDescriptionFile pdfFile = this.getDescription();
-		String ver = "0.1.10g";
-		String str = this.getConfig().getString("version#");
-		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
-				logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
-			}else{
-			    logger.info("[BaseCommands] Config Created");
-			}
-		 if(str != null) {
-			 if(this.getConfig().getString("version#").equals(ver)) {
-				 logger.info(PREFIX + " Config is up to date!");
-			 }else if(!(pdfFile.getVersion().equals(ver))) {
-				 logger.severe(PREFIX + " Config Outdated/Corrupted!!");
-				 logger.warning(PREFIX + " THIS WILL RESET THE ENTIRE CONFIG!");
-				 logger.warning(PREFIX + " ANY MODIFICATIONS TO THE CONFIG WILL BE ERASED SO YOU WILL HAVE TO SET THEM AGAIN!");
-				 logger.info(PREFIX + " Replacing old/corrupted config!");
-				 File configFile = new File("plugins/BaseCommands/config.yml");
-				 configFile.delete();
-			 }
-		 }else if(str == null){
-			 logger.severe(PREFIX + " Config Outdated/Corrupted!!");
-			 logger.warning(PREFIX + " THIS WILL RESET THE ENTIRE CONFIG!");
-			 logger.warning(PREFIX + " ANY MODIFICATIONS TO THE CONFIG WILL BE ERASED SO YOU WILL HAVE TO SET THEM AGAIN!");
-			 logger.info(PREFIX + " Replacing old/corrupted config!");
-			 File configFile = new File("plugins/BaseCommands/config.yml");
-			 configFile.delete();
-		 }
-	        if(this.getConfig().getString("passwd").equals("true")) {
-	        	logger.info(PREFIX + " Password enabled!");
-	        	passwod = true;
-	        }else if(this.getConfig().getString("passwd").equals("false")) {
-	        	logger.info(PREFIX + " Password disabled!");
-	        	passwod = false;
-	        }
-	        if(this.getConfig().getString("signwarp").equals("true")) {
-	        	logger.info(PREFIX + " SignWarp enabled!");
-	        	signw = true;
-	        }else if(this.getConfig().getString("signwarp").equals("false")) {
-	        	logger.info(PREFIX + " SignWarp disabled");
-	        	signw = false;
-	        }
-	}
-	
-	public void checkConfig() {
-		  if(!checkFile("config.yml", this.getDataFolder())) {
-		    getLogger().warning("Error creating config!");
-		  }
-		}
-		public boolean checkFile(String filename, File directory) {
-		  if(!(new File(directory, filename)).exists()) {
-		    if(!extractFile(filename, directory)) {
-		      return false;
-		    }
-		  }
-		  return true;
-		}
-		public boolean extractFile(String filename, File destination) {
-		  File outputFile = new File(destination, filename);
-		  DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		  Date date = new Date();
-		  String theDate = dateFormat.format(date);
-		  File backup = new File(destination, theDate + filename);
-		  try {
-		    if(outputFile.exists()) {
-		      outputFile.renameTo(backup);
-		    }
-		    destination.mkdir();
-		    if(getClass().getResourceAsStream("/" + filename) == null) {
-		      if(backup.exists()) {
-		        backup.renameTo(outputFile);
-		      }
-		      System.out.println("File not found in jar: " + filename);
-		      return false;
-		    }
-		    outputFile.createNewFile();
-		    InputStream is = getClass().getResourceAsStream("/" + filename);
-		    FileOutputStream fos = new FileOutputStream(outputFile);
-		    byte[] buffer = new byte[1024];
-		    int bytesRead;
-		    while((bytesRead = is.read(buffer)) > 0) {
-		      fos.write(buffer, 0, bytesRead);
-		    }
-		    fos.flush();
-		    fos.close();
-		    is.close();
-		  }
-		  catch (IOException e) {
-		    e.printStackTrace();
-		    System.out.println("Error extracting file: " + filename);
-		  }
-		  return true;
-		}
+	}		
 }

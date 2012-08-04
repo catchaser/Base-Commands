@@ -1,5 +1,5 @@
 ##############################################################
-##  Base Commands!                                          ##
+## Base Commands!                                           ##
 ## Base Commands Author: Catchaser9620/catchaser            ##
 ## Base Commands Tester: sh4nks                             ##
 ## Base Commands is the property of Catchaser9620           ##
@@ -11,19 +11,20 @@
 ##############################################################
 
 
-##The messge for when players join the server (Color Support)
-MOTD: Welcome to the Server 
+
 ##The message for when a player tries to use a command with out the permission (Color Support)
 PERM: You do not have that permission!
 ##Enables/Disables the password requirement when a player joins the server its disabled by default(No Color Support)
 passwd: false
-## Rules of the server (No Color Support)
-rules:
+##Rules
+Rules:
 - Have Fun
-- Play Nice
+- Dont Grief!
 ##DO NOT TOUCH THIS THIS IS FOR BASECOMMANDS CONFIG UPDATER!
 ##If Deleted please delete the config manually and reload the server!
-version#: 0.1.9z
+version#: 0.1.12fg
 ##Sign Features!
 ##Sign warp feature disabled by default
 signwarp: false
+##Broadcast Player level up disabled by default
+levelup: false

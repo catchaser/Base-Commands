@@ -24,7 +24,7 @@ public class BCspawnPlayerListener implements Listener {
 	{
 		if(!event.getPlayer().hasPlayedBefore()){
 		plugin.getServer().broadcastMessage("[BaseCommands] First join for " + event.getPlayer().getName());
-			BaseCommands.logger.info((new StringBuilder()).append("[BaseCommands] First join for ").append(event.getPlayer().getName()).toString() + ".... Teleporting to spawn");
+			plugin.logger.info((new StringBuilder()).append("[BaseCommands] First join for ").append(event.getPlayer().getName()).toString() + ".... Teleporting to spawn");
 		try
 		{
 			BufferedReader br = new BufferedReader(new FileReader("plugins/BaseCommands/spawn"));
