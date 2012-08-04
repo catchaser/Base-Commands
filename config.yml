@@ -26,5 +26,4 @@ version#: 0.1.12fg
 ##Sign Features!
 ##Sign warp feature disabled by default
 signwarp: false
-##Broadcast Player level up disabled by default
-levelup: false
+
