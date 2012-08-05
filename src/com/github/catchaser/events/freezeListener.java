@@ -1,4 +1,4 @@
-package com.github.catchaser.listeners;
+package com.github.catchaser.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

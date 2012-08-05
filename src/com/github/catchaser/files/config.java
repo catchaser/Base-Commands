@@ -22,7 +22,7 @@ public class config {
 	
 	public void configl() {
 		PluginDescriptionFile pdfFile = plugin.getDescription();
-		String ver = "0.1.12fg";
+		String ver = "0.1.12fi";
 		String str = plugin.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				plugin.logger.info("[BaseCommands] Config Loaded"); //loads the config.yml

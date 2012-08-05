@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
 
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -22,6 +23,7 @@ import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.commands.passwd.passwd;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.BlockBreak;
+import com.github.catchaser.events.freezeListener;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
 import com.github.catchaser.events.signw;
@@ -29,7 +31,6 @@ import com.github.catchaser.files.MOTD;
 import com.github.catchaser.files.config;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
-import com.github.catchaser.listeners.freezeListener;
 import com.github.catchaser.spawn.BCListener;
 import com.github.catchaser.warp.signwarp;
 import com.github.catchaser.warp.warp;
@@ -63,6 +64,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public boolean signw = false;
 	public boolean signif = false;
 	public boolean blockbreaktf = false;
+	public FileConfiguration help;
+	public File cfgh;
 	
 	@Override
 	public void onEnable() { // Enables the plugin
@@ -158,7 +161,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		ban = new BanExecutor(this);
 		pas = new passwd(this);
 		swe = new signwarp(this);
-		
+
     	getCommand("heal").setExecutor(BCC1e);
     	getCommand("tp").setExecutor(BCC1e);
     	getCommand("rules").setExecutor(BCC1e);

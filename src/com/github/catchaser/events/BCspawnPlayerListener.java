@@ -1,4 +1,4 @@
-package com.github.catchaser.listeners;
+package com.github.catchaser.events;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
