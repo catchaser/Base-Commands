@@ -3,7 +3,7 @@ package com.github.catchaser.listeners;
 import java.io.File;
 import java.util.logging.Logger;
 
-import com.github.catchaser.events.signw;
+import com.github.catchaser.signs.signw;
 
 public class signwmethods{
 	    public static final Logger logger = Logger.getLogger("Minecraft");

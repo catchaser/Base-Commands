@@ -1,6 +1,8 @@
-Base Commands for Bukkit (1.3.1) Server v2.2.0
+Base Commands for Bukkit (1.3.1) Server v2.2.3
 
-v2.2.0:
+v2.2.3:
+fixed the msg command
+v2.2.2:
 added sign warping (Disabled By Default)
 got ride of ginfo 2 command
 added Seperate MOTD File

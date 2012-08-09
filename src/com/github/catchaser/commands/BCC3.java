@@ -19,7 +19,10 @@ public class BCC3 implements CommandExecutor{
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		Player p = (Player) sender;
+		Player p = null;
+		if(sender instanceof Player) {
+			p = (Player) sender;
+		}
 		if(commandLabel.equalsIgnoreCase("msg")) {
 		if(p == null) {
 			if((args.length == 0) || args.length == 1) {
@@ -43,41 +46,41 @@ public class BCC3 implements CommandExecutor{
 		    
 			}
 			
-		}
 		}else if(p != null) {
-			if(!(plugin.mute)) {
-				if(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*") || p.hasPermission("BC.*")) { // checks if the players has the permissions
-					if((args.length == 0) || args.length == 1) {
-						p.sendMessage(ChatColor.BLUE + "Usage: /msg <player> <msg>"); // checks if they used the command right
-					}else if(args.length >= 2 ) {
-						Player TP = plugin.getServer().getPlayer(args[0]);
-						if(TP == null || (sender instanceof Player && !((Player) sender).canSee(TP))) {
-							p.sendMessage(ChatColor.RED + "Player is not online!");
-							return true;
-						}else {
-							 StringBuilder message = new StringBuilder();	     
-						     for (int i = 1; i < args.length; i++) {
-				      		 if (i > 1) message.append(" ");
-			         		 message.append(args[i]);
-				             }			 
-					         String result = ChatColor.DARK_PURPLE + "From: " + ChatColor.WHITE + p.getName() + ": " + ChatColor.DARK_PURPLE + message; 
-				             TP.sendMessage(result);
-							 p.sendMessage(ChatColor.GOLD + "Message sent!");
-								        return true;
-					    }
-				    
-					}
-					
-				}else if(!(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*") || p.hasPermission("BC.*"))) {
-					String message = plugin.getConfig().getString("PERM");
-			    	message = ChatColor.translateAlternateColorCodes('&', message);
-			    	message = ChatColor.translateAlternateColorCodes('$', message);
-			    	message = ChatColor.translateAlternateColorCodes('%', message);
-			    	p.sendMessage(message);
+			if(p.hasPermission("BC.who.msg") || p.hasPermission("BC.who.*") || p.hasPermission("BC.*")) { // checks if the players has the permissions
+				if(!(plugin.mute)) {
+				if((args.length == 0) || args.length == 1) {
+					p.sendMessage(ChatColor.BLUE + "Usage: /msg <player> <msg>"); // checks if they used the command right
+				}else if(args.length >= 2 ) {
+					Player TP = plugin.getServer().getPlayer(args[0]);
+					if(TP == null || (sender instanceof Player && !((Player) sender).canSee(TP))) {
+						p.sendMessage(ChatColor.RED + "Player is not online!");
+						return true;
+					}else {
+						 StringBuilder message = new StringBuilder();	     
+					     for (int i = 1; i < args.length; i++) {
+			      		 if (i > 1) message.append(" ");
+		         		 message.append(args[i]);
+			             }			 
+				         String result = ChatColor.DARK_PURPLE + "From: " + ChatColor.WHITE + p.getName() + ": " + ChatColor.DARK_PURPLE + message; 
+			             TP.sendMessage(result);
+						 p.sendMessage(ChatColor.GOLD + "Message sent!");
+							        return true;
+				    }
+			    
 				}
+				
 			}else if(plugin.mute) {
 				p.sendMessage(ChatColor.RED + "You have been muted!");
 			}	
+		}else {
+			String message = plugin.getConfig().getString("PERM");
+	    	message = ChatColor.translateAlternateColorCodes('&', message);
+	    	message = ChatColor.translateAlternateColorCodes('$', message);
+	    	message = ChatColor.translateAlternateColorCodes('%', message);
+	    	p.sendMessage(message);
+		}
+		}
 		}
 		if(commandLabel.equalsIgnoreCase("freeze")) {
 			if(p == null) {
@@ -166,100 +169,6 @@ public class BCC3 implements CommandExecutor{
 						}
 					}
 				}else if(!(p.hasPermission("BC.admin.freeze") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
-					String message = plugin.getConfig().getString("PERM");
-			    	message = ChatColor.translateAlternateColorCodes('&', message);
-			    	message = ChatColor.translateAlternateColorCodes('$', message);
-			    	message = ChatColor.translateAlternateColorCodes('%', message);
-			    	p.sendMessage(message);
-				}
-			}
-		}
-		if(commandLabel.equalsIgnoreCase("mute")) {
-			if(p == null) {
-				if(args.length  == 1) {
-					Player TP = plugin.getServer().getPlayer(args[0]);
-					if(TP != null) {
-						if(plugin.mute) {
-							sender.sendMessage(PREFIX + ChatColor.GOLD + " Player already muted!");
-							sender.sendMessage(PREFIX + ChatColor.GOLD + " To unmute use /unmute <player>");
-						}else if(!(plugin.mute)) {
-							plugin.mute = true;
-							TP.sendMessage(ChatColor.RED + "You have been muted by: " + sender.getName());
-							sender.sendMessage(PREFIX + ChatColor.BLUE + " You muted: " + TP.getName());
-						}
-					}else if(TP == null) {
-						sender.sendMessage(PREFIX + ChatColor.GREEN + " Player is not online!");
-					}
-				}else if(!(args.length == 1)) {
-					sender.sendMessage(PREFIX + ChatColor.BLUE + " Usage: mute <player>");
-				}
-			}else if(p != null) {
-				if(p.hasPermission("BC.admin.mute") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
-					if(args.length  == 1) {
-						Player TP = plugin.getServer().getPlayer(args[0]);
-						if(TP != null) {
-							if(plugin.mute) {
-								p.sendMessage(ChatColor.GOLD + "Player already muted!");
-								p.sendMessage(ChatColor.GOLD + "To unmute use /unmute <player>");
-							}else if(!(plugin.mute)) {
-								plugin.mute = true;
-								TP.sendMessage(ChatColor.RED + "You have been muted by: " + p.getName());
-								p.sendMessage(ChatColor.BLUE + "You muted: " + TP.getName());
-							}
-						}else if(TP == null) {
-							p.sendMessage(ChatColor.GREEN + "Player is not online!");
-						}
-					}else if(!(args.length == 1)) {
-						p.sendMessage(ChatColor.BLUE + "Usage: /mute <player>");
-					}
-				}else if(!(p.hasPermission("BC.admin.mute") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
-					String message = plugin.getConfig().getString("PERM");
-			    	message = ChatColor.translateAlternateColorCodes('&', message);
-			    	message = ChatColor.translateAlternateColorCodes('$', message);
-			    	message = ChatColor.translateAlternateColorCodes('%', message);
-			    	p.sendMessage(message);
-				}
-			}
-		}
-		if(commandLabel.equalsIgnoreCase("unmute")) {
-			if(p == null) {
-				if(args.length == 1) {
-					Player TP = plugin.getServer().getPlayer(args[0]);
-					if(TP != null) {
-						if(plugin.mute) {
-							plugin.mute = false;
-							TP.sendMessage(ChatColor.GREEN + "You have been unmuted by: " + sender.getName());
-							sender.sendMessage(PREFIX + ChatColor.BLUE + " You unmuted: " + TP.getName());
-						}else if(!(plugin.mute)) {
-							sender.sendMessage(PREFIX + ChatColor.GOLD + " Player is not muted!");
-							sender.sendMessage(PREFIX + ChatColor.GOLD + "To mute a player use mute <player>");
-						}
-					}else if(TP == null) {
-						sender.sendMessage(PREFIX + ChatColor.BLUE + " Player is offline");
-					}
-				}else if(!(args.length == 1)) {
-					sender.sendMessage(PREFIX + ChatColor.BLUE + " Usage: unmute <player>");
-				}
-			}else if(p != null) {
-				if(p.hasPermission("BC.admin.unmute") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*")) {
-					if(args.length == 1) {
-						Player TP = plugin.getServer().getPlayer(args[0]);
-						if(TP != null) {
-							if(plugin.mute) {
-								plugin.mute = false;
-								TP.sendMessage(ChatColor.GREEN + "You have been unmuted by: " + p.getName());
-								p.sendMessage(ChatColor.GREEN + "You unmuted: " + TP.getName());
-							}else if(!(plugin.mute)) {
-								p.sendMessage(ChatColor.GOLD + "Player is not muted!");
-								p.sendMessage(ChatColor.GOLD + "To mute a player use /mute <player>");
-							}
-						}else if(TP == null) {
-							p.sendMessage(ChatColor.GREEN + "Player is offline");
-						}
-					}else if(!(args.length == 1)) {
-						p.sendMessage(ChatColor.BLUE + "Usage: /unmute <player>");
-					}
-				}else if(!(p.hasPermission("BC.admin.unmute") || p.hasPermission("BC.admin.*") || p.hasPermission("BC.*"))) {
 					String message = plugin.getConfig().getString("PERM");
 			    	message = ChatColor.translateAlternateColorCodes('&', message);
 			    	message = ChatColor.translateAlternateColorCodes('$', message);

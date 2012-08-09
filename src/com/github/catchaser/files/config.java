@@ -22,7 +22,7 @@ public class config {
 	
 	public void configl() {
 		PluginDescriptionFile pdfFile = plugin.getDescription();
-		String ver = "0.1.12fi";
+		String ver = "0.1.12fk";
 		String str = plugin.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				plugin.logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
@@ -39,6 +39,7 @@ public class config {
 				 plugin.logger.info(plugin.PREFIX + " Replacing old/corrupted config!");
 				 File configFile = new File("plugins/BaseCommands/config.yml");
 				 configFile.delete();
+				 checkConfig();
 			 }
 		 }else if(str == null){
 			 plugin.logger.severe(plugin.PREFIX + " Config Outdated/Corrupted!!");
@@ -47,20 +48,19 @@ public class config {
 			 plugin.logger.info(plugin.PREFIX + " Replacing old/corrupted config!");
 			 File configFile = new File("plugins/BaseCommands/config.yml");
 			 configFile.delete();
+			 checkConfig();
 		 }
 	        if(plugin.getConfig().getString("passwd").equals("true")) {
 	        	plugin.logger.info(plugin.PREFIX + " Password enabled!");
 	        	plugin.passwod = true;
 	        }else if(plugin.getConfig().getString("passwd").equals("false")) {
 	        	plugin.logger.info(plugin.PREFIX + " Password disabled!");
-	        	plugin.passwod = false;
 	        }
 	        if(plugin.getConfig().getString("signwarp").equals("true")) {
 	        	plugin.logger.info(plugin.PREFIX + " SignWarp enabled!");
 	        	plugin.signw = true;
 	        }else if(plugin.getConfig().getString("signwarp").equals("false")) {
 	        	plugin.logger.info(plugin.PREFIX + " SignWarp disabled");
-	        	plugin.signw = false;
 	        }
 	}
 	

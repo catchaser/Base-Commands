@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import net.milkbowl.vault.permission.Permission;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -26,11 +25,12 @@ import com.github.catchaser.events.BlockBreak;
 import com.github.catchaser.events.freezeListener;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
-import com.github.catchaser.events.signw;
 import com.github.catchaser.files.MOTD;
 import com.github.catchaser.files.config;
+import com.github.catchaser.files.versionfiles;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
+import com.github.catchaser.signs.signw;
 import com.github.catchaser.spawn.BCListener;
 import com.github.catchaser.warp.signwarp;
 import com.github.catchaser.warp.warp;
@@ -56,6 +56,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public final mutedListener ml = new mutedListener(this);
 	public final signw sw = new signw(this);
 	public final config cfg = new config(this);
+	public final versionfiles vf = new versionfiles(this);
 	public final MOTD mtd = new MOTD(this);
 	public final BlockBreak bb = new BlockBreak(this);
 	public boolean freeze = false;
@@ -63,16 +64,17 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public boolean passwod = false;
 	public boolean signw = false;
 	public boolean signif = false;
+	public boolean itemsi = false;
 	public boolean blockbreaktf = false;
-	public FileConfiguration help;
-	public File cfgh;
+	public PluginDescriptionFile pdfFile = this.getDescription();
 	
 	@Override
 	public void onEnable() { // Enables the plugin
-		PluginDescriptionFile pdfFile = this.getDescription();
+		
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
 		setupPermissions();
         RegisterEvents();
+        vf.VersionCheck();
 		PDIR();
 		cfg.configl();
 		cfg.checkConfig();
@@ -82,7 +84,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
     	HDIR();	
     	WDIR();
     	passwds(); 
-    	swarps();
+    	swarps();	
 	}
 
 	@Override
@@ -191,8 +193,8 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("msg").setExecutor(BCC3e);
 		getCommand("freeze").setExecutor(BCC3e);
 		getCommand("unfreeze").setExecutor(BCC3e);
-		getCommand("mute").setExecutor(BCC3e);
-		getCommand("unmute").setExecutor(BCC3e);
+		getCommand("mute").setExecutor(mis);
+		getCommand("unmute").setExecutor(mis);
 		getCommand("passwd").setExecutor(pas);
 		getCommand("setpasswd").setExecutor(pas);
 		getCommand("resetpasswd").setExecutor(pas);
