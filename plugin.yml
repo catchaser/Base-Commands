@@ -1,6 +1,6 @@
 name: BaseCommands
 main: com.github.catchaser.BaseCommands
-version: 2.2.3
+version: 2.2.9
 description:  >
              Basic Commands for a bukkit server
 Author: catchaser9620
@@ -78,6 +78,8 @@ commands:
      description: Sets a warp for a sign
     delsignwarp:
      description: Deletes a sign warp
+    god:
+     description: allows a player not to take damage
 permissions:
   BC.*:
      decription: gives all BaseCommands Permissions
@@ -218,6 +220,7 @@ permissions:
             BC.admin.mute: true
             BC.admin.unmute: true
             BC.admin.passwd.reset: true
+            BC.admin.god: true
   BC.admin.kick:
          description: Allows the kick command
          default: op
@@ -241,6 +244,9 @@ permissions:
           default: op
   BC.admin.passwd.reset:
           description: resets the players password
+          default: op
+  BC.admin.god:
+          description: allows the god command
           default: op
   BC.name.*:
     description: Allows all nickname commands

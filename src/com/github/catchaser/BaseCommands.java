@@ -22,12 +22,12 @@ import com.github.catchaser.commands.misc.misc;
 import com.github.catchaser.commands.passwd.passwd;
 import com.github.catchaser.events.BanLogging;
 import com.github.catchaser.events.BlockBreak;
+//import com.github.catchaser.events.ChestPro;
 import com.github.catchaser.events.freezeListener;
 import com.github.catchaser.events.joining;
 import com.github.catchaser.events.mutedListener;
 import com.github.catchaser.files.MOTD;
 import com.github.catchaser.files.config;
-import com.github.catchaser.files.versionfiles;
 import com.github.catchaser.home.home;
 import com.github.catchaser.listeners.BanStore;
 import com.github.catchaser.signs.signw;
@@ -56,9 +56,9 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public final mutedListener ml = new mutedListener(this);
 	public final signw sw = new signw(this);
 	public final config cfg = new config(this);
-	public final versionfiles vf = new versionfiles(this);
 	public final MOTD mtd = new MOTD(this);
 	public final BlockBreak bb = new BlockBreak(this);
+	//public final ChestPro CP = new ChestPro(this);
 	public boolean freeze = false;
 	public boolean mute = false;
 	public boolean passwod = false;
@@ -66,15 +66,15 @@ public class BaseCommands extends JavaPlugin implements Listener{
 	public boolean signif = false;
 	public boolean itemsi = false;
 	public boolean blockbreaktf = false;
+	public boolean Chestp = false;
 	public PluginDescriptionFile pdfFile = this.getDescription();
 	
 	@Override
 	public void onEnable() { // Enables the plugin
-		
+		PluginDescriptionFile pdfFile = this.getDescription();
 		this.logger.info(PREFIX + " " + pdfFile.getName() + " Version: " + pdfFile.getVersion() + " has been enabled!");
 		setupPermissions();
         RegisterEvents();
-        vf.VersionCheck();
 		PDIR();
 		cfg.configl();
 		cfg.checkConfig();
@@ -120,6 +120,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		this.getServer().getPluginManager().registerEvents(ml, this);//registers the mute
 		this.getServer().getPluginManager().registerEvents(sw, this); //registers the warp sign event
 		this.getServer().getPluginManager().registerEvents(bb, this); //registers the Block break event
+		//this.getServer().getPluginManager().registerEvents(CP, this);//registers the Chest Protection event
 	}
 
 	public void PDIR() {
@@ -187,6 +188,7 @@ public class BaseCommands extends JavaPlugin implements Listener{
 		getCommand("ban").setExecutor(ban);
 		getCommand("unban").setExecutor(ban);
 		getCommand("nickname").setExecutor(mis);
+		getCommand("god").setExecutor(mis);
 		getCommand("unnick").setExecutor(mis);
 		getCommand("bcversion").setExecutor(mis);
 		getCommand("feed").setExecutor(mis);

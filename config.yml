@@ -22,8 +22,11 @@ Rules:
 - Dont Grief!
 ##DO NOT TOUCH THIS THIS IS FOR BASECOMMANDS CONFIG UPDATER!
 ##If Deleted please delete the config manually and reload the server!
-version#: 0.1.12fk
+version#: 0.1.15
 ##Sign warp feature disabled by default
 signwarp: false
+##Chest Protection disabled by default
+###NOT YET AVAILBLE
+chestPro: false
 
 

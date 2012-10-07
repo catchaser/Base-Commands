@@ -22,7 +22,7 @@ public class config {
 	
 	public void configl() {
 		PluginDescriptionFile pdfFile = plugin.getDescription();
-		String ver = "0.1.12fk";
+		String ver = "0.1.15";
 		String str = plugin.getConfig().getString("version#");
 		 if(new File("plugins/BaseCommands/config.yml").exists()) { //checks if config.yml already exsits
 				plugin.logger.info("[BaseCommands] Config Loaded"); //loads the config.yml
@@ -62,6 +62,13 @@ public class config {
 	        }else if(plugin.getConfig().getString("signwarp").equals("false")) {
 	        	plugin.logger.info(plugin.PREFIX + " SignWarp disabled");
 	        }
+	        /**if(plugin.getConfig().getString("chestPro").equals("true")) {
+	        	plugin.logger.info(plugin.PREFIX + " Chest Protection enabled!");
+	        	plugin.Chestp = true;
+	        }else if(plugin.getConfig().getString("chestPro").equals("false")) {
+	        	plugin.logger.info(plugin.PREFIX + " Chest Protection disabled!");
+	        	plugin.Chestp = false;
+	        }**/
 	}
 	
 	public void checkConfig() {
