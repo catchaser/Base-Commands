@@ -1,6 +1,7 @@
-Base Commands for Bukkit (1.3.2) Server v2.2.5
+Base Commands for Bukkit (1.3.2) Server v2.2.9
 
-v2.3.5:
+v2.2.9:
+Added chest protection (not yet availble)
 upgraded to CraftBukkit 1.3.2 R1
 v2.2.3:
 fixed the msg command
