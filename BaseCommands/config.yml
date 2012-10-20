@@ -1,0 +1,32 @@
+##############################################################
+## Base Commands!                                           ##
+## Base Commands Author: Catchaser9620/catchaser            ##
+## Base Commands Tester: sh4nks                             ##
+## Base Commands is the property of Catchaser9620           ##
+## Base Commands should only be downloaded from:            ##
+## dev.bukkit.org                                           ##
+## Base Commands Server basecommands.tk  (Not Online)       ##
+##                                                          ##
+##                                                          ##
+##############################################################
+
+
+
+##The message for when a player tries to use a command with out the permission (Color Support)
+PERM: You do not have that permission!
+##Enables/Disables the password requirement when a player joins the server its disabled by default(No Color Support)
+passwd: false
+##Rules
+Rules:
+- Have Fun
+- Dont Grief!
+##DO NOT TOUCH THIS THIS IS FOR BASECOMMANDS CONFIG UPDATER!
+##If Deleted please delete the config manually and reload the server!
+version#: 0.1.15
+##Sign warp feature disabled by default
+signwarp: false
+##Chest Protection disabled by default
+###NOT YET AVAILBLE
+chestPro: false
+
+
